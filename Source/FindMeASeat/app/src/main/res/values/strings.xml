@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">FindMeASeat</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="filterUniversity">Filter</string>
+    <string-array name="countries_array">
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+    </string-array>
+</resources>
