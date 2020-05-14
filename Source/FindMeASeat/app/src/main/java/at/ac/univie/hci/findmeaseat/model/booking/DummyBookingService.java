@@ -23,4 +23,9 @@ public final class DummyBookingService implements BookingService {
        return new Booking(id, randomUUID(), seat, now(), now().plusHours(1));
     }
 
+    @Override
+    public void cancelBooking(UUID id) {
+        // TODO
+    }
+
 }

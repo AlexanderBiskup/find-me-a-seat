@@ -6,4 +6,6 @@ public interface BookingService {
 
     Booking getBooking(UUID id);
 
+    void cancelBooking(UUID id);
+
 }
