@@ -9,24 +9,28 @@
 
     <TextView
         android:id="@+id/homeOverview"
-        android:layout_width="119dp"
-        android:layout_height="41dp"
+        android:layout_width="410dp"
+        android:layout_height="81dp"
+        android:background="@color/colorAccent"
         android:gravity="center_vertical"
         android:text="Overview"
+        android:textColor="@color/colorPrimary"
+        android:textColorHighlight="@color/colorAccent"
+        android:textColorHint="@color/colorAccent"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/home_booking"
-        android:layout_width="122dp"
+        android:layout_width="0dp"
         android:layout_height="43dp"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center_vertical"
         android:text="Bookings"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.055"
@@ -47,10 +51,12 @@
 
     <TextView
         android:id="@+id/home_noted_buildings"
-        android:layout_width="121dp"
+        android:layout_width="0dp"
         android:layout_height="37dp"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center_vertical"
         android:text="Noted Buildings"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"

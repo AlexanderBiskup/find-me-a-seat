@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import at.ac.univie.hci.findmeaseat.model.building.Building;
+import at.ac.univie.hci.findmeaseat.model.building.BuildingFragment;
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,6 +34,16 @@ public class HomeActivity extends AppCompatActivity {
             fragmentTransaction_booking.commit();
         }
 
+        if(findViewById(R.id.home_buildings_fragment_frame) != null){
+            if(savedInstanceState != null){
+                return;
+            }
+            FragmentTransaction fragmentTransaction_booking = fragmentManager_building.beginTransaction();
+            BuildingFragment buldingFragment = new BuildingFragment();
+
+            fragmentTransaction_booking.add(R.id.home_buildings_fragment_frame, buldingFragment, null);
+            fragmentTransaction_booking.commit();
+        }
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
