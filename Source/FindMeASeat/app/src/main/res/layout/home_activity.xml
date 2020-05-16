@@ -34,18 +34,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.196" />
 
-    <fragment
-        android:id="@+id/home_booking_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="361dp"
-        android:layout_height="189dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <FrameLayout
+        android:id="@+id/home_booking_fragment_frame"
+        android:layout_width="410dp"
+        android:layout_height="153dp"
+        app:layout_constraintBottom_toTopOf="@+id/home_noted_buildings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.337"
-        tools:layout="@layout/fragment_booking" />
+        app:layout_constraintTop_toBottomOf="@+id/home_booking">
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/home_noted_buildings"
@@ -60,16 +58,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.566" />
 
-    <FrameLayout
-        android:id="@+id/home_booking_frame"
-        android:layout_width="393dp"
-        android:layout_height="214dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/home_nav"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.915"/>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/home_nav"
         android:layout_width="wrap_content"
@@ -79,6 +67,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
+    <FrameLayout
+        android:id="@+id/home_buildings_fragment_frame"
+        android:layout_width="413dp"
+        android:layout_height="221dp"
+        app:layout_constraintBottom_toTopOf="@+id/home_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_noted_buildings"
+        app:layout_constraintVertical_bias="0.384">
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
