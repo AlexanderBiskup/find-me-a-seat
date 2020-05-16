@@ -13,7 +13,7 @@ import static java.util.UUID.randomUUID;
 public final class DummyBookingService implements BookingService {
 
     @Override
-    public Booking getBooking(UUID id) {
+    public Booking getBookingById(UUID id) {
         Address address = new Address("Währingerstraße 29", "Wien", "1180");
         Building building = new Building("Fakultät für Informatik", address);
         building.addArea("1. Stock");
@@ -24,7 +24,7 @@ public final class DummyBookingService implements BookingService {
     }
 
     @Override
-    public void cancelBooking(UUID id) {
+    public void cancelBookingById(UUID id) {
         // TODO
     }
 

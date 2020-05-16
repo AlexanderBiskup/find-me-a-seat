@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public interface BookingService {
 
-    Booking getBooking(UUID id);
+    Booking getBookingById(UUID id);
 
-    void cancelBooking(UUID id);
+    void cancelBookingById(UUID id);
 
 }

@@ -26,7 +26,7 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
         UUID bookingId = UUID.fromString(getIntent().getStringExtra(BOOKING_ID_EXTRA_NAME));
-        Booking booking = bookingService.getBooking(bookingId);
+        Booking booking = bookingService.getBookingById(bookingId);
         setTitle("Buchungsdetails");
         if (findViewById(R.id.booking_details_booking_container) != null) {
             BookingFragment fragment = BookingFragment.newInstance(bookingId);
@@ -44,7 +44,7 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
 
     @Override
     public Booking getBooking(UUID bookingId) {
-        return bookingService.getBooking(bookingId);
+        return bookingService.getBookingById(bookingId);
     }
 
     @Override
