@@ -3,39 +3,60 @@ package at.ac.univie.hci.findmeaseat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.util.UUID;
 
+import at.ac.univie.hci.findmeaseat.ui.login.Users;
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingDetailsActivity;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final String LOGIN_QUERY = "at.ac.univie.hci.findmeaseat.ui.login.Users.LOGIN_QUERY";
+
+
+    private TextView intro;
+    private TextView username = null;
+    private TextView password = null;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        setContentView(R.layout.activity_login);
+
+        intro = (TextView) findViewById(R.id.login_Text);
+        username = (TextView) findViewById(R.id.LogIn_username);
+        password = (TextView) findViewById(R.id.LogIn_Password);
+
+        login = (Button) findViewById(R.id.button_logIn);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLogInActivity();
+            }
+        });
+
+
     }
 
-    public void startBookingDetailsActivity(View view) {
+    public void openLogInActivity() {
         Intent intent = new Intent(this, BookingDetailsActivity.class);
-        intent.putExtra(BookingDetailsActivity.BOOKING_ID_EXTRA_NAME, UUID.randomUUID().toString());
-        startActivity(intent);
+        String user = username.getText().toString();
+        String password1 = password.getText().toString();
+
+        Users users = new Users();
+        if(users.checkUser(user, password1)){
+            intent.putExtra(BookingDetailsActivity.BOOKING_ID_EXTRA_NAME, UUID.randomUUID().toString());
+            intent.putExtra(LOGIN_QUERY, user);
+            startActivity(intent);}
+        else {
+            intro.setText("Try Again!");
+        }
     }
 
 }
