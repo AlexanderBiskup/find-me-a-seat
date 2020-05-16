@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.ac.univie.hci.findmeaseat">
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="google_play_services_version" />
         <activity android:name=".ui.bookings.BookingDetailsActivity"></activity>
         <activity
             android:name=".MainActivity"
@@ -20,5 +24,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
