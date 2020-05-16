@@ -1,24 +1,16 @@
 package at.ac.univie.hci.findmeaseat.ui.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-
-
-
 import java.util.HashMap;
 
-import at.ac.univie.hci.findmeaseat.MainActivity;
-
 public class Users {
-    // Hashmap Objekt erstellen, um die Users der App manuell zu speichern
-    HashMap <String, String> users = null;
+
+    HashMap <String, String> users;
 
     public Users(){
         users = init();
     }
 
-    public HashMap<String, String> init(){
+    private HashMap<String, String> init(){
         users = new HashMap<>();
         users.put("uni_administrator", "admin");
         users.put("student1", "student");
@@ -28,14 +20,9 @@ public class Users {
     }
 
     public Boolean checkUser(String username, String password){
-        for (String user : users.keySet()){
-            if (user.equals(username)){
-                if (users.get(user).equals(password)){
-                    return true;
-                }
-            }
-        }
-        return false;
+        String storedPassword = users.get(username);
+        return storedPassword != null && storedPassword.equals(password);
+
     }
 }
 
