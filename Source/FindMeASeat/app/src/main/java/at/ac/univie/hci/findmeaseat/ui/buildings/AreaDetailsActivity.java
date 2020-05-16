@@ -37,7 +37,7 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
         setTitle(String.format("%s - %s", area.getName(), area.getBuilding().getName()));
 
         RecyclerView seatsRecyclerView = findViewById(R.id.seatsRecyclerView);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 4);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 5);
         seatsRecyclerView.setLayoutManager(layoutManager);
         seatsAdapter = new SeatsAdapter(area.getAllSeats(),this, this);
         seatsRecyclerView.setAdapter(seatsAdapter);

@@ -7,11 +7,11 @@
     android:layout_width="match_parent"
     android:layout_gravity="center_horizontal"
     android:gravity="center_vertical|start"
-    android:layout_height="91dp">
+    android:layout_height="76dp">
 
     <TextView
         android:id="@+id/seat_item_text"
-        android:layout_width="75dp"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
