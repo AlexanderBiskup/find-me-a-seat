@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingDetailsActivity;
+import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,9 +33,18 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    // TODO This is used only temporary for dev until the connection to the start screen is setup
     public void startBookingDetailsActivity(View view) {
         Intent intent = new Intent(this, BookingDetailsActivity.class);
-        intent.putExtra(BookingDetailsActivity.BOOKING_ID_EXTRA_NAME, UUID.randomUUID().toString());
+        intent.putExtra(BookingDetailsActivity.BOOKING_ID_EXTRA_NAME, UUID.randomUUID().toString()); // TODO use real id
+        startActivity(intent);
+    }
+
+    // TODO This is used only temporary for dev until the connection to the building details screen is setup
+    public void startAreaDetailsActivity(View view) {
+        Intent intent = new Intent(this, AreaDetailsActivity.class);
+        intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, UUID.randomUUID().toString()); // TODO use real id
+        intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, "1. Stock"); // TODO use real name
         startActivity(intent);
     }
 
