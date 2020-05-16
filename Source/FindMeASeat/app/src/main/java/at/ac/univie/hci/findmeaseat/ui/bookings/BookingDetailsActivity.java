@@ -19,7 +19,7 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
 
     public static final String BOOKING_ID_EXTRA_NAME = "bookingId";
 
-    private BookingService bookingService = new DummyBookingService();
+    private BookingService bookingService = new DummyBookingService(); // TODO use factory
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
