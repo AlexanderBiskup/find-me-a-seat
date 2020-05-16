@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FindMeASeat</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="filterUniversity">Filter</string>
+    <string-array name="buildings_array">
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+        <item>Fakultät für Informatik</item>
+        <item>Fakultät für Chemie</item>
+        <item>Hauptgebäude</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
