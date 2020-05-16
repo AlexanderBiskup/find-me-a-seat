@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingDetailsActivity;
 import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
+import at.ac.univie.hci.findmeaseat.ui.home.HomePage;
 
 public class MainActivity extends AppCompatActivity {
 

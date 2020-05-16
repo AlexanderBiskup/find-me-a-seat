@@ -52,6 +52,7 @@ public class BookingFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = (BookingFragmentContext) context;
+
     }
 
     @Override
