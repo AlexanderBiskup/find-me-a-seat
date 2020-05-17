@@ -1,5 +1,7 @@
 package at.ac.univie.hci.findmeaseat.model.building.service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.model.building.Address;
@@ -20,6 +22,11 @@ public class DummyBuildingService implements BuildingService {
         area.addSeat("A4");
         area.addSeat("A5");
         return building;
+    }
+
+    @Override
+    public List<Building> getAllBuildings() {
+        return Collections.emptyList();
     }
 
 }

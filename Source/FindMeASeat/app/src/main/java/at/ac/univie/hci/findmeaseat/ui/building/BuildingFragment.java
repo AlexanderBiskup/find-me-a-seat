@@ -12,82 +12,52 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import java.util.List;
 
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.BuildingAdapter;
-import at.ac.univie.hci.findmeaseat.model.building.CSVBuildingLoader;
+import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
+import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
 
 public class BuildingFragment extends Fragment {
+
+    private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
 
     private BuildingAdapter buildingAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        BuildingViewModel buildingViewModel = new ViewModelProvider(this).get(BuildingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_building, container, false);
-
         final ListView buildingList = root.findViewById(R.id.building_list);
         EditText filter = root.findViewById(R.id.filter_text);
-
-        List<Building> buildings;
-
-        CSVBuildingLoader c = new CSVBuildingLoader();
-        buildings = c.loadBuildings(requireContext());
-
-        buildingAdapter = new BuildingAdapter(getContext(), buildings);
+        buildingAdapter = new BuildingAdapter(getContext(), buildingService.getAllBuildings());
         buildingList.setAdapter(buildingAdapter);
-
-        filter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                buildingAdapter.getFilter().filter(s);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
+        filter.addTextChangedListener(new FilterTextWatcher());
         buildingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Intent intent = new Intent(BuildingFragment.this.getActivity(), BuildingDetailsActivity.class);
-
-                Building buildingItem = (Building) buildingAdapter.getItem(position);
-                String buildingName = buildingItem.getName();
-                String seats = buildingItem.availableleSeats() + "/" +buildingItem.maximalSeats();
-
-                int area = buildingItem.floor();
-
-                intent.putExtra("building", buildingName);
-                intent.putExtra("seat", seats);
-                intent.putExtra("area", area);
-
-                startActivityForResult(intent, 1);
-            }
-        });
-
-
-
-        buildingViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
+                Intent intent = new Intent(requireActivity(), BuildingDetailsActivity.class);
+                Building building = (Building) buildingAdapter.getItem(position);
+                intent.putExtra(BuildingDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
+                startActivity(intent);
             }
         });
         return root;
+    }
+
+    private class FilterTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            buildingAdapter.getFilter().filter(s);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
     }
 }
