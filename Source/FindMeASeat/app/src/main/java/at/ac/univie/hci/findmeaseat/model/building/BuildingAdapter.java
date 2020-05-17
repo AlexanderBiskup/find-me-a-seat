@@ -1,4 +1,4 @@
-package at.ac.univie.hci.findmeaseat;
+package at.ac.univie.hci.findmeaseat.model.building;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,17 +12,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.ac.univie.hci.findmeaseat.model.building.Building;
+import at.ac.univie.hci.findmeaseat.R;
 
 public class BuildingAdapter extends BaseAdapter implements Filterable{
     private Context context;
     private List<Building>  buildingList;
-    private List<Building>  filtredBuildingList;
+    private List<Building> filteredBuildingList;
 
     public BuildingAdapter(Context context, List<Building> buildingList) {
         this.context = context;
         this.buildingList = buildingList;
-        this.filtredBuildingList = buildingList;
+        this.filteredBuildingList = buildingList;
     }
 
     @Override
@@ -48,13 +48,13 @@ public class BuildingAdapter extends BaseAdapter implements Filterable{
         }
 
         TextView buildingName = convertView.findViewById(R.id.building_list_name);
-        TextView buildingAdress = convertView.findViewById(R.id.building_list_adress);
+        TextView buildingAddress = convertView.findViewById(R.id.building_list_adress);
         TextView buildingFloor = convertView.findViewById(R.id.building_list_seat);
 
         Building buildingItem = (Building) getItem(position);
 
         buildingName.setText(buildingItem.getName());
-        buildingAdress.setText(buildingItem.getAddress().getStreet());
+        buildingAddress.setText(buildingItem.getAddress().getStreet());
         buildingFloor.setText(buildingItem.availableleSeats() + "/" + buildingItem.maximalSeats());
         return convertView;
     }
@@ -65,16 +65,17 @@ public class BuildingAdapter extends BaseAdapter implements Filterable{
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
-                if (constraint.length() == 0 || constraint.equals(null)) {
+                if (constraint == null ||constraint.length() == 0) {
                     filterResults.values = buildingList;
                     filterResults.count = buildingList.size();
                 } else {
-                    String upperConstraint = constraint.toString().toUpperCase();
+                    String upperConstraintName = constraint.toString().toUpperCase();
+                    String upperConstraintAddress = constraint.toString().toUpperCase();
                     List<Building> tempBuilding = new ArrayList<>();
 
-                    for (int i = 0; i < filtredBuildingList.size(); ++i) {
-                        if (filtredBuildingList.get(i).getName().toUpperCase().contains(upperConstraint)) {
-                            Building b = new Building(filtredBuildingList.get(i).getName(),filtredBuildingList.get(i).getAddress());
+                    for (int i = 0; i < filteredBuildingList.size(); ++i) {
+                        if (filteredBuildingList.get(i).getName().toUpperCase().contains(upperConstraintName) || filteredBuildingList.get(i).getAddress().getStreet().toUpperCase().contains(upperConstraintAddress)) {
+                            Building b = new Building(filteredBuildingList.get(i).getName(), filteredBuildingList.get(i).getAddress());
                             tempBuilding.add(b);
                         }
                     }
@@ -93,8 +94,5 @@ public class BuildingAdapter extends BaseAdapter implements Filterable{
 
     }
 
-    public List<Building> getBuildingList() {
-        return buildingList;
-    }
 
 }

@@ -1,4 +1,4 @@
-package at.ac.univie.hci.findmeaseat;
+package at.ac.univie.hci.findmeaseat.model.building;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,10 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.ac.univie.hci.findmeaseat.R;
+
 public class BuildingDetails extends AppCompatActivity {
-    private TextView buildingName;
-    private TextView seats;
-    private ListView areas;
+   // private TextView buildingName;
+    //private TextView seats;
+    //private ListView areas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +27,19 @@ public class BuildingDetails extends AppCompatActivity {
         String seat = intent.getStringExtra("seat");
         int area = intent.getIntExtra("area",0);
 
-        buildingName = findViewById(R.id.building_name_view);
-        seats = findViewById(R.id.seats_view);
-        areas = findViewById(R.id.area_list);
+        TextView buildingName = findViewById(R.id.building_name_view);
+        TextView seats = findViewById(R.id.seats_view);
+        ListView areas = findViewById(R.id.area_list);
 
         buildingName.setText(building);
         seats.setText(seat);
 
-        List<String> areaList = new ArrayList<String>();
+        List<String> areaList = new ArrayList<>();
         for(int i=1; i <= area; ++i){
             areaList.add("Stock " + i);
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 areaList );
