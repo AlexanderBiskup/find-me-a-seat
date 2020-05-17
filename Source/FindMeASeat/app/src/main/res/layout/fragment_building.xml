@@ -5,18 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment" >
+    tools:context=".ui.building.BuildingFragment" >
 
     <EditText
-        android:id="@+id/filterUniversity"
-        android:layout_width="213dp"
+        android:id="@+id/filter_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="2dp"
         android:ems="10"
         android:hint="@string/filterUniversity"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,9 +26,9 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ListView
-        android:id="@+id/buildingList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/building_list"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
@@ -39,9 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterUniversity"
+        app:layout_constraintTop_toBottomOf="@+id/filter_text"
         app:layout_constraintVertical_bias="0.2" />
-
-    <requestFocus/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

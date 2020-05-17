@@ -2,9 +2,11 @@ package at.ac.univie.hci.findmeaseat.model.building;
 
 import androidx.annotation.NonNull;
 
+import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public final class Building {
@@ -45,6 +47,21 @@ public final class Building {
 
     public Collection<Area> getAllAreas() {
         return areas.values();
+    }
+
+    public int maximalSeats(){
+        Random r = new SecureRandom();
+        return r.nextInt(1500-500) + 500;
+    }
+
+    public int availableleSeats(){
+        Random r = new SecureRandom();
+        return r.nextInt(400-50) + 50;
+    }
+
+    public int floor(){
+        Random r = new SecureRandom();
+        return r.nextInt(8-1) + 1;
     }
 
 }
