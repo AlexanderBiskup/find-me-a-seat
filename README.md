@@ -1,17 +1,17 @@
 ## Readme - M3
 
 * Gruppe:	Mittwoch
-* Team-Nr.:
+* Team-Nr.:     212
 * Projektthema: Find Me a Seat
 
 ### Implementierung
 
-Framework:	[iOS | Android | Cordova - iOS | Cordova - Android]
+Framework:	Android
 
-API-Version:	[Android Lollipop 5.1 | iOS 9 â€¦ ]
+API-Version:	Android 8.0 (API 26)
 
 Geraet(e), auf dem(denen) getestet wurde:
-[Nexus 5, iPhone 5, iPad Air, etc.]
+Pixel XL
 
 Externe Libraries und Frameworks:
 [...]
