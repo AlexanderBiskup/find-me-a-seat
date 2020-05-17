@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,9 @@ import java.util.UUID;
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.booking.Booking;
 import at.ac.univie.hci.findmeaseat.model.building.Address;
+import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
+import at.ac.univie.hci.findmeaseat.model.building.Seat;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
 
@@ -58,8 +61,14 @@ public class BookingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
-        Booking booking = context.getBooking(this.bookingId);
-        Building building = booking.getSeat().getArea().getBuilding();
+
+        //Booking Example
+        Address address = new Address("street", "city", "zipCode");
+        Building building = new Building("building", address);
+        Area area = new Area("name", building);
+        Seat seat = new Seat("seat", area);
+        Booking booking = new Booking(UUID.randomUUID(), UUID.randomUUID(), seat, LocalDateTime.now(), LocalDateTime.now());
+
         ((TextView) view.findViewById(R.id.buildingNameTextView)).setText(building.getName());
         ((TextView) view.findViewById(R.id.streetTextView)).setText(building.getAddress().getStreet());
         ((TextView) view.findViewById(R.id.cityTextView)).setText(getFormattedCity(building.getAddress()));
@@ -89,9 +98,30 @@ public class BookingFragment extends Fragment {
         }
     }
 
-    interface BookingFragmentContext {
+  public interface BookingFragmentContext {
         Booking getBooking(UUID bookingId);
         void onClick(UUID bookingId);
     }
 
+    public static String getArgBookingId() {
+        return ARG_BOOKING_ID;
+    }
+
+    public UUID getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(UUID bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return (Context) context;
+    }
+
+    public void setContext(BookingFragmentContext context) {
+        this.context = context;
+    }
 }

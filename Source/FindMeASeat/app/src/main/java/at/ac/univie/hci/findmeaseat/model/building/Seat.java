@@ -7,7 +7,7 @@ public final class Seat {
     private final String name;
     private final Area area;
 
-    Seat(String name, Area area) {
+    public Seat(String name, Area area) {
         this.name = name;
         this.area = area;
     }
