@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import at.ac.univie.hci.findmeaseat.R;
 
+
 public class HomeFragment extends Fragment {
 
         private HomeViewModel homeViewModel;
@@ -23,6 +24,7 @@ public class HomeFragment extends Fragment {
             homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
             View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+<<<<<<< HEAD
             homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(@Nullable String s) {
@@ -40,4 +42,21 @@ public class HomeFragment extends Fragment {
 
 
 
+=======
+    public View onCreateView(@NonNull LayoutInflater inflater,
+            ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel =
+                ViewModelProviders.of(this).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        final TextView textView = root.findViewById(R.id.text_home);
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
+        return root;
+    }
+>>>>>>> 254dc35d829e889e2d195ca4978157e84d6fa464
 }
