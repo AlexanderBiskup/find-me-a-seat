@@ -30,17 +30,18 @@ public class HomePage extends AppCompatActivity {
         fragmentManager_booking = getSupportFragmentManager();
         fragmentManager_building = getSupportFragmentManager();
 
-        if(findViewById(R.id.home_fra_frame_booking) != null){
+        if(findViewById(R.id.home_booking_frame) != null){
             if(savedInstanceState != null){
                 return;
             }
             FragmentTransaction fragmentTransaction_booking = fragmentManager_booking.beginTransaction();
             BookingFragment bookingFragment = new BookingFragment();
 
-            fragmentTransaction_booking.add(R.id.home_fra_frame_booking, bookingFragment, null);
+            fragmentTransaction_booking.add(R.id.home_booking_frame, bookingFragment, null);
             fragmentTransaction_booking.commit();
         }
 
+        /*
         if(findViewById(R.id.home_building_frame) != null){
             if(savedInstanceState != null){
                 return;
@@ -51,7 +52,7 @@ public class HomePage extends AppCompatActivity {
             fragmentTransaction_booking.add(R.id.home_building_frame, buildingFragment, null);
             fragmentTransaction_booking.commit();
         }
-
+*/
     }
 
 

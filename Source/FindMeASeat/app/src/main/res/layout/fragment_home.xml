@@ -30,7 +30,26 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168" />
+        app:layout_constraintVertical_bias="0.148" />
+
+    <FrameLayout
+        android:id="@+id/home_booking_frame"
+        android:layout_width="402dp"
+        android:layout_height="210dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.307">
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="at.ac.univie.hci.findmeaseat.ui.bookings.BookingFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:layout="@layout/fragment_booking" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/home_buildings"
@@ -44,47 +63,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.59" />
 
-    <fragment
-        android:id="@+id/home_building_fargment"
-        android:name="at.ac.univie.hci.findmeaseat.ui.bookings.BookingFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36"
-        tools:layout="@layout/fragment_booking" />
-
     <FrameLayout
-        android:id="@+id/home_fra_frame_booking"
-        android:layout_width="409dp"
-        android:layout_height="201dp"
-        android:layout_marginTop="164dp"
+        android:id="@+id/home_building_frame"
+        android:layout_width="0dp"
+        android:layout_height="241dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/home_building_frame"
-        android:layout_width="409dp"
-        android:layout_height="277dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.936">
 
-        <fragment
-            android:id="@+id/home_building_frag"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="frag" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

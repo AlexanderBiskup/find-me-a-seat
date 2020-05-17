@@ -63,10 +63,10 @@ public class BookingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
         //Booking Example
-        Address address = new Address("street", "city", "zipCode");
-        Building building = new Building("building", address);
-        Area area = new Area("name", building);
-        Seat seat = new Seat("seat", area);
+        Address address = new Address("Waehringer strasse", "Wien", "1090");
+        Building building = new Building("Fakuektaet fuer Informatik ", address);
+        Area area = new Area("1. Stock", building);
+        Seat seat = new Seat("D03", area);
         Booking booking = new Booking(UUID.randomUUID(), UUID.randomUUID(), seat, LocalDateTime.now(), LocalDateTime.now());
 
         ((TextView) view.findViewById(R.id.buildingNameTextView)).setText(building.getName());
