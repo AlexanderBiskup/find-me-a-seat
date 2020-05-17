@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.bookings.BookingFragment">
 
     <androidx.cardview.widget.CardView
@@ -20,30 +20,27 @@
             android:baselineAligned="false">
 
             <LinearLayout
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_weight="3"
-                android:orientation="vertical">
-
+                android:layout_width="0dp">
                 <TextView
                     android:id="@+id/buildingNameTextView"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fakultät für Informatik"
-                    android:textStyle="bold" />
+                    android:text="Fakultät für Informatik" />
 
                 <TextView
                     android:id="@+id/streetTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Address" />
-
                 <TextView
                     android:id="@+id/cityTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="City" />
-
                 <TextView
                     android:id="@+id/datesTextView"
                     android:layout_width="match_parent"
@@ -53,17 +50,16 @@
 
 
             <LinearLayout
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
+                android:layout_width="0dp"
+                >
                 <TextView
                     android:id="@+id/info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="" />
-
                 <TextView
                     android:id="@+id/areaTextView"
                     android:layout_width="match_parent"
@@ -81,14 +77,15 @@
                 <TextView
                     android:id="@+id/durationTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="60 min"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:text="60 min" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
 </FrameLayout>

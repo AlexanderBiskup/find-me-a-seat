@@ -11,26 +11,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import at.ac.univie.hci.findmeaseat.model.booking.Booking;
-import at.ac.univie.hci.findmeaseat.model.building.Address;
-import at.ac.univie.hci.findmeaseat.model.building.Area;
-import at.ac.univie.hci.findmeaseat.model.building.Building;
-import at.ac.univie.hci.findmeaseat.model.building.Seat;
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingDetailsActivity;
-import at.ac.univie.hci.findmeaseat.ui.bookings.BookingFragment;
 import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
-public class MainActivity extends AppCompatActivity implements BookingFragment.BookingFragmentContext {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -56,13 +48,4 @@ public class MainActivity extends AppCompatActivity implements BookingFragment.B
         startActivity(intent);
     }
 
-    @Override
-    public Booking getBooking(UUID bookingId) {
-        return null;
-    }
-
-    @Override
-    public void onClick(UUID bookingId) {
-
-    }
 }
