@@ -1,4 +1,4 @@
-package at.ac.univie.hci.findmeaseat.model.building;
+package at.ac.univie.hci.findmeaseat.ui.building;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,10 +13,7 @@ import java.util.List;
 
 import at.ac.univie.hci.findmeaseat.R;
 
-public class BuildingDetails extends AppCompatActivity {
-   // private TextView buildingName;
-    //private TextView seats;
-    //private ListView areas;
+public class BuildingDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +42,6 @@ public class BuildingDetails extends AppCompatActivity {
                 areaList );
 
         areas.setAdapter(arrayAdapter);
-
-
-
     }
+
 }

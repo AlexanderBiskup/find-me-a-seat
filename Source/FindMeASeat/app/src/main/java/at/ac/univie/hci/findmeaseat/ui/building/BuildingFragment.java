@@ -18,10 +18,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.List;
-import java.util.Objects;
 
 import at.ac.univie.hci.findmeaseat.model.building.BuildingAdapter;
-import at.ac.univie.hci.findmeaseat.model.building.BuildingDetails;
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.CSVBuildingLoader;
@@ -42,7 +40,7 @@ public class BuildingFragment extends Fragment {
         List<Building> buildings;
 
         CSVBuildingLoader c = new CSVBuildingLoader();
-        buildings = c.loadBuildings(Objects.requireNonNull(getContext()));
+        buildings = c.loadBuildings(requireContext());
 
         adapterBuilding = new BuildingAdapter(getContext(), buildings);
         buildingList.setAdapter(adapterBuilding);
@@ -69,7 +67,7 @@ public class BuildingFragment extends Fragment {
         buildingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Intent intent = new Intent(BuildingFragment.this.getActivity(), BuildingDetails.class);
+                Intent intent = new Intent(BuildingFragment.this.getActivity(), BuildingDetailsActivity.class);
 
 
 
