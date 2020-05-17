@@ -12,14 +12,14 @@ import java.util.UUID;
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.booking.Booking;
 import at.ac.univie.hci.findmeaseat.model.booking.BookingService;
-import at.ac.univie.hci.findmeaseat.model.booking.DummyBookingService;
+import at.ac.univie.hci.findmeaseat.model.booking.BookingServiceFactory;
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingFragment.BookingFragmentContext;
 
 public class BookingDetailsActivity extends AppCompatActivity implements BookingFragmentContext {
 
     public static final String BOOKING_ID_EXTRA_NAME = "bookingId";
 
-    private BookingService bookingService = new DummyBookingService(); // TODO use factory
+    private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
