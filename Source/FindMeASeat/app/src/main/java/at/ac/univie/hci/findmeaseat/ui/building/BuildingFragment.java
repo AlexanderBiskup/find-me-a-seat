@@ -26,12 +26,10 @@ import at.ac.univie.hci.findmeaseat.model.building.CSVBuildingLoader;
 
 public class BuildingFragment extends Fragment {
 
-    private BuildingAdapter adapterBuilding;
+    private BuildingAdapter buildingAdapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        BuildingViewModel buildingViewModel;
-        buildingViewModel = new ViewModelProvider(this).get(BuildingViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        BuildingViewModel buildingViewModel = new ViewModelProvider(this).get(BuildingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_building, container, false);
 
         final ListView buildingList = root.findViewById(R.id.building_list);
@@ -42,8 +40,8 @@ public class BuildingFragment extends Fragment {
         CSVBuildingLoader c = new CSVBuildingLoader();
         buildings = c.loadBuildings(requireContext());
 
-        adapterBuilding = new BuildingAdapter(getContext(), buildings);
-        buildingList.setAdapter(adapterBuilding);
+        buildingAdapter = new BuildingAdapter(getContext(), buildings);
+        buildingList.setAdapter(buildingAdapter);
 
         filter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -53,7 +51,7 @@ public class BuildingFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapterBuilding.getFilter().filter(s);
+                buildingAdapter.getFilter().filter(s);
 
             }
 
@@ -69,7 +67,7 @@ public class BuildingFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 Intent intent = new Intent(BuildingFragment.this.getActivity(), BuildingDetailsActivity.class);
 
-                Building buildingItem = (Building) adapterBuilding.getItem(position);
+                Building buildingItem = (Building) buildingAdapter.getItem(position);
                 String buildingName = buildingItem.getName();
                 String seats = buildingItem.availableleSeats() + "/" +buildingItem.maximalSeats();
 

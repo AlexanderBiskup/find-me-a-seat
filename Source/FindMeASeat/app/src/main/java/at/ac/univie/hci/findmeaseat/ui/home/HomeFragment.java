@@ -15,13 +15,9 @@ import at.ac.univie.hci.findmeaseat.R;
 
 public class HomeFragment extends Fragment {
 
-        private HomeViewModel homeViewModel;
-
-        public View onCreateView(@NonNull LayoutInflater inflater,
-                                 ViewGroup container, Bundle savedInstanceState) {
-            homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
             View root = inflater.inflate(R.layout.fragment_home, container, false);
-
             homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(@Nullable String s) {
@@ -29,7 +25,6 @@ public class HomeFragment extends Fragment {
                 }
             });
             return root;
-
         }
 
 }
