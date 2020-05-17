@@ -59,7 +59,7 @@ public class BuildingAdapter extends BaseAdapter implements Filterable {
 
         buildingName.setText(buildingItem.getName());
         buildingAddress.setText(buildingItem.getAddress().getStreet());
-        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", buildingItem.availableleSeats(), buildingItem.maximalSeats()));
+        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", buildingItem.availableSeats(), buildingItem.maximalSeats()));
         return convertView;
     }
 

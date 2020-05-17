@@ -54,7 +54,7 @@ public final class Building {
         return r.nextInt(1500-500) + 500;
     }
 
-    public int availableleSeats(){
+    public int availableSeats(){
         Random r = new SecureRandom();
         return r.nextInt(400-50) + 50;
     }

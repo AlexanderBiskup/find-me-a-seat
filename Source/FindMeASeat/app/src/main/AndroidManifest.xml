@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.buildings.AreaDetailsActivity" />
-        <activity android:name=".ui.building.BuildingDetailsActivity" />
+        <activity
+            android:name=".ui.building.BuildingDetailsActivity"
+            android:windowSoftInputMode="adjustPan"
+        />
         <activity android:name=".ui.bookings.BookingDetailsActivity" />
         <activity
             android:name=".MainActivity"
