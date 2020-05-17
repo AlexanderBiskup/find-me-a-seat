@@ -1,4 +1,4 @@
-package at.ac.univie.hci.findmeaseat.ui.login;
+package at.ac.univie.hci.findmeaseat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import at.ac.univie.hci.findmeaseat.MainActivity;
-import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.ui.login.Users;
 
 
