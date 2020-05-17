@@ -10,7 +10,7 @@ public final class Area {
     private final Building building;
     private final Map<String, Seat> seats;
 
-    Area(String name, Building building) {
+    public Area(String name, Building building) {
         this.name = name;
         this.building = building;
         this.seats = new HashMap<>();
