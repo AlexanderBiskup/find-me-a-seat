@@ -27,7 +27,4 @@
     <string name="welcome_to_the_app">Welcome to the App!</string>
     <string name="passwort">Passwort</string>
     <string name="title_building">Building</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="filterUniversity">Filter</string>
 </resources>
