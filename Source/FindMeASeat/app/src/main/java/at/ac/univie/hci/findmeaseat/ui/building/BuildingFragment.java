@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
-import at.ac.univie.hci.findmeaseat.model.building.BuildingAdapter;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
 

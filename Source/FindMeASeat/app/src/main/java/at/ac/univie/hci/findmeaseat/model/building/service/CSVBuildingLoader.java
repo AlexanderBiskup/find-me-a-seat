@@ -1,7 +1,6 @@
-package at.ac.univie.hci.findmeaseat.model.building;
+package at.ac.univie.hci.findmeaseat.model.building.service;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.ac.univie.hci.findmeaseat.R;
+import at.ac.univie.hci.findmeaseat.model.building.Address;
+import at.ac.univie.hci.findmeaseat.model.building.Building;
 
-public class CSVBuildingLoader {
+class CSVBuildingLoader {
 
-    public List<Building> loadBuildings(Context context) {
+    List<Building> loadBuildings(Context context) {
         final List<Building> buildings = new ArrayList<>();
         InputStream is = context.getResources().openRawResource(R.raw.buildings);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));

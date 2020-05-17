@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.model.building.Building;
-import at.ac.univie.hci.findmeaseat.model.building.CSVBuildingLoader;
 
 public class DummyBuildingService implements BuildingService {
 
