@@ -29,9 +29,7 @@ public class CSVBuildingLoader {
                 String zibCode = separator[3];
                 buildings.add(new Building(buildingName, new Address(street, city, zibCode)));
             }
-        } catch (
-                IOException e) {
-
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return buildings;
