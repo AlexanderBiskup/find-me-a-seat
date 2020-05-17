@@ -15,23 +15,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
-import at.ac.univie.hci.findmeaseat.model.building.BuildingAdapter;
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
+import at.ac.univie.hci.findmeaseat.model.building.BuildingAdapter;
 import at.ac.univie.hci.findmeaseat.model.building.CSVBuildingLoader;
 
-
 public class BuildingFragment extends Fragment {
+
     private BuildingAdapter adapterBuilding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         BuildingViewModel buildingViewModel;
-        buildingViewModel = ViewModelProviders.of(this).get(BuildingViewModel.class);
+        buildingViewModel = new ViewModelProvider(this).get(BuildingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_building, container, false);
 
         final ListView buildingList = root.findViewById(R.id.building_list);
@@ -68,8 +68,6 @@ public class BuildingFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 Intent intent = new Intent(BuildingFragment.this.getActivity(), BuildingDetailsActivity.class);
-
-
 
                 Building buildingItem = (Building) adapterBuilding.getItem(position);
                 String buildingName = buildingItem.getName();
