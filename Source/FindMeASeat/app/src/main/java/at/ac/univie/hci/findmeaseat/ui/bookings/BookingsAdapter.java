@@ -16,10 +16,12 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingCardViewHolder>
 
     private ArrayList<Booking> bookings;
     private final BookingCardViewCreator bookingCardViewCreator;
+    private final SelectBookingHandler selectBookingHandler;
 
-    public BookingsAdapter(Collection<Booking> bookings, LayoutInflater inflater) {
+    BookingsAdapter(Collection<Booking> bookings, LayoutInflater inflater, SelectBookingHandler selectBookingHandler) {
         this.bookings = new ArrayList<>(bookings);
         this.bookingCardViewCreator = new BookingCardViewCreator(inflater);
+        this.selectBookingHandler = selectBookingHandler;
     }
 
     @NonNull
@@ -32,6 +34,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingCardViewHolder>
     public void onBindViewHolder(@NonNull BookingCardViewHolder holder, int position) {
         Booking booking = bookings.get(position);
         holder.bindBooking(booking);
+        holder.getBookingCardView().setOnClickListener(view -> selectBookingHandler.onSelect(booking));
     }
 
     @Override
@@ -42,6 +45,10 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingCardViewHolder>
     @Override
     public int getItemCount() {
         return bookings.size();
+    }
+
+    interface SelectBookingHandler {
+        void onSelect(Booking booking);
     }
 
 }
