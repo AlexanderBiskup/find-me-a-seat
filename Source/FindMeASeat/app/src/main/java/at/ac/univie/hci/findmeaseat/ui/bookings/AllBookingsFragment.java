@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.booking.Booking;
 import at.ac.univie.hci.findmeaseat.model.booking.BookingService;
