@@ -108,6 +108,8 @@ public class BuildingDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AreaDetailsActivity.class);
             intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
             intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, area.getName());
+            intent.putExtra(AreaDetailsActivity.START_DATE_EXTRA_NAME, getPeriod().getStart().toString());
+            intent.putExtra(AreaDetailsActivity.END_DATE_EXTRA_NAME, getPeriod().getEnd().toString());
             startActivity(intent);
         });
 
