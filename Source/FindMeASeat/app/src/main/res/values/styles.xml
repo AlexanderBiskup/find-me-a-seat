@@ -20,4 +20,8 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="Datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#4E19D5</item>
+    </style>
+
 </resources>
