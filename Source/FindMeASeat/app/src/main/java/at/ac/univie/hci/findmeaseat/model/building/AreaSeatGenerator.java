@@ -14,7 +14,7 @@ public class AreaSeatGenerator {
 
         int seatNumber = 1;
         char c = 'A';
-        for (int floor = 1; floor <= 3; ++floor) {
+        for (int floor = 1; floor <= randomAreas; ++floor) {
             if (floor > 1)
                 ++c;
             if (seatNumber == 11) {
