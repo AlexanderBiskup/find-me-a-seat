@@ -7,24 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment" >
 
-    <ListView
-        android:id="@+id/buildingList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/frame"
-        android:divider="#F0000000"
-        android:dividerHeight="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <requestFocus/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/home_overview"
+                android:layout_width="406dp"
+                android:layout_height="54dp"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:text="@string/Overview" />
+
+            <TextView
+                android:id="@+id/home_bookings"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical|fill_vertical"
+                android:text="@string/Bookings" />
+
+            <fragment
+                android:id="@+id/home_all_bookings"
+                android:name="at.ac.univie.hci.findmeaseat.ui.bookings.AllBookingsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:layout="@layout/fragment_all_bookings" />
+
+            <TextView
+                android:id="@+id/home_buildings"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical|fill_vertical"
+                android:text="Favorite Buildings" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
