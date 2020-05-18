@@ -33,6 +33,7 @@ public class BuildingFragment extends Fragment {
         EditText filter = root.findViewById(R.id.filter_text);
         buildingAdapter = new BuildingAdapter(getContext(), buildingService.getAllBuildings(), seatStatusService);
         buildingList.setAdapter(buildingAdapter);
+
         filter.addTextChangedListener(new FilterTextWatcher());
         buildingList.setOnItemClickListener((adapter, view, position, id) -> {
             Intent intent = new Intent(requireActivity(), BuildingDetailsActivity.class);
