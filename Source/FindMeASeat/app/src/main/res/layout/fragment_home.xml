@@ -29,11 +29,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical|fill_vertical"
-                android:text="@string/Bookings" />
+                android:text="@string/Upcoming Bookings" />
 
             <fragment
                 android:id="@+id/home_all_bookings"
-                android:name="at.ac.univie.hci.findmeaseat.ui.bookings.AllBookingsFragment"
+                android:name="at.ac.univie.hci.findmeaseat.ui.bookings.AllValidBookingsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 tools:layout="@layout/fragment_all_bookings" />

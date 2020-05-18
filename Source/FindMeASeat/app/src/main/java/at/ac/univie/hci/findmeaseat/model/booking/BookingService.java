@@ -11,4 +11,6 @@ public interface BookingService {
 
     List<Booking> getAllBookings();
 
+    List<Booking> getAllValidBookings();
+
 }

@@ -1,5 +1,6 @@
 package at.ac.univie.hci.findmeaseat.model.booking;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +44,20 @@ public final class DummyBookingService implements BookingService {
     @Override
     public List<Booking> getAllBookings() {
         return bookings;
+    }
+
+    @Override
+    public List<Booking> getAllValidBookings() {
+
+        List<Booking> validBookings = new ArrayList<>();
+
+        for(int i = 0; i < bookings.size(); i++){
+            if(bookings.get(i).getEnd().isBefore(LocalDateTime.now())){
+                continue;
+            }
+            validBookings.add(bookings.get(i));
+        }
+        return validBookings;
     }
 
 }

@@ -20,7 +20,7 @@ import at.ac.univie.hci.findmeaseat.model.booking.Booking;
 import at.ac.univie.hci.findmeaseat.model.booking.BookingService;
 import at.ac.univie.hci.findmeaseat.model.booking.BookingServiceFactory;
 
-public class AllBookingsFragment extends Fragment implements BookingsAdapter.SelectBookingHandler {
+public class AllValidBookingsFragment extends Fragment implements BookingsAdapter.SelectBookingHandler {
 
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
 
@@ -29,7 +29,7 @@ public class AllBookingsFragment extends Fragment implements BookingsAdapter.Sel
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
 
 
-        BookingsAdapter adapter = new BookingsAdapter(bookingService.getAllBookings(), inflater, this);
+        BookingsAdapter adapter = new BookingsAdapter(bookingService.getAllValidBookings(), inflater, this);
         bookingsRecyclerView.setAdapter(adapter);
         LayoutManager layoutManager = new LinearLayoutManager(getContext());
         bookingsRecyclerView.setLayoutManager(layoutManager);
