@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import at.ac.univie.hci.findmeaseat.R;
+import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
+import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusServiceFactory;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
@@ -21,6 +23,7 @@ import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactor
 public class BuildingFragment extends Fragment {
 
     private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
+    private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
 
     private BuildingAdapter buildingAdapter;
 
@@ -28,7 +31,7 @@ public class BuildingFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_building, container, false);
         final ListView buildingList = root.findViewById(R.id.building_list);
         EditText filter = root.findViewById(R.id.filter_text);
-        buildingAdapter = new BuildingAdapter(getContext(), buildingService.getAllBuildings());
+        buildingAdapter = new BuildingAdapter(getContext(), buildingService.getAllBuildings(), seatStatusService);
         buildingList.setAdapter(buildingAdapter);
         filter.addTextChangedListener(new FilterTextWatcher());
         buildingList.setOnItemClickListener((adapter, view, position, id) -> {

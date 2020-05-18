@@ -3,6 +3,7 @@ package at.ac.univie.hci.findmeaseat.model.building;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Area {
 
@@ -36,5 +37,19 @@ public final class Area {
 
     public Collection<Seat> getAllSeats() {
         return seats.values();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return Objects.equals(name, area.name) &&
+                Objects.equals(building, area.building);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, building);
     }
 }

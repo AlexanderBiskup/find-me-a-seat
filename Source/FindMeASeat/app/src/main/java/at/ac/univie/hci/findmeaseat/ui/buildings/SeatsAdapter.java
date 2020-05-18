@@ -13,18 +13,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import at.ac.univie.hci.findmeaseat.R;
+import at.ac.univie.hci.findmeaseat.model.booking.Period;
+import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
+
+import static at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService.SeatStatus.FREE;
 
 public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHolder> {
 
-    private ArrayList<Seat> seats;
-    private SeatSelectionHandler seatSelectionHandler;
-    private Context context;
+    private final ArrayList<Seat> seats;
+    private final SeatSelectionHandler seatSelectionHandler;
+    private final Context context;
+    private final SeatStatusService seatStatusService;
+    private final Period period;
 
-    SeatsAdapter(Collection<Seat> seats, Context context, SeatSelectionHandler seatSelectionHandler) {
+    SeatsAdapter(Collection<Seat> seats, Context context, SeatSelectionHandler seatSelectionHandler, SeatStatusService seatStatusService, Period period) {
         this.seats = new ArrayList<>(seats);
         this.seatSelectionHandler = seatSelectionHandler;
         this.context = context;
+        this.seatStatusService = seatStatusService;
+        this.period = period;
     }
 
     @NonNull
@@ -39,11 +47,13 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
         final Seat seat = seats.get(position);
         holder.parentView.setOnClickListener(v -> seatSelectionHandler.select(seat));
         holder.textView.setText(seat.getName());
-        if(seatSelectionHandler.isSelected(seat)) {
+        if (seatSelectionHandler.isSelected(seat)) {
             holder.textView.setBackgroundColor(context.getColor(R.color.colorAccent));
-        } else {
+        } else if (seatStatusService.getStatus(seat, period).equals(FREE)) {
             holder.textView.setBackgroundColor(context.getColor(R.color.freeSeat));
-        } // TODO refactor
+        } else {
+            holder.textView.setBackgroundColor(context.getColor(R.color.design_default_color_error));
+        }
     }
 
     @Override
@@ -54,6 +64,7 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     static class SeatViewHolder extends RecyclerView.ViewHolder {
         View parentView;
         TextView textView;
+
         SeatViewHolder(View view) {
             super(view);
             this.parentView = view;
