@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.R;
@@ -35,6 +36,7 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
     private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     private RecyclerView.Adapter seatsAdapter;
     private Seat selectedSeat;
@@ -49,6 +51,8 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
         String areaName = getIntent().getStringExtra(AREA_NAME_EXTRA_NAME);
         Building building = buildingService.getBuildingById(buildingId);
         period = new Period(parse(getIntent().getStringExtra(START_DATE_EXTRA_NAME)), parse(getIntent().getStringExtra(END_DATE_EXTRA_NAME)));
+        TextView periodView = findViewById(R.id.seat_booking_period);
+        periodView.setText(String.format("%s - %s", period.getStart().format(dateFormatter), period.getEnd().format(dateFormatter)));
         Area area = building.getArea(areaName);
         setTitle(String.format("%s - %s", area.getName(), area.getBuilding().getName()));
         RecyclerView seatsRecyclerView = findViewById(R.id.seatsRecyclerView);
@@ -74,9 +78,11 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     }
 
     public void bookSelectedSeat(View view) {
+        if(selectedSeat == null) return;
         bookingService.bookSeat(selectedSeat, period);
-        Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
+        selectedSeat = null;
         seatsAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
     }
 
 }
