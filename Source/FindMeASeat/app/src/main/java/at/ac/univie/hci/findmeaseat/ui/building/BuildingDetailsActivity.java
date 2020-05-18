@@ -1,6 +1,7 @@
 package at.ac.univie.hci.findmeaseat.ui.building;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -21,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -49,6 +53,8 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private final BookingService bookingService = BookingServiceFactory.getSingletonInstance();
     private final Calendar calendarFrom = Calendar.getInstance();
     private final Calendar calendarTo = Calendar.getInstance();
+    private final Calendar timeFrom = Calendar.getInstance();
+    private final Calendar timeTo = Calendar.getInstance();
     private Building building;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.GERMAN);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -89,13 +95,44 @@ public class BuildingDetailsActivity extends AppCompatActivity {
             updateFreeSeats();
         };
 
-        dateFrom.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.Datepicker, dateSetListenerFrom, calendarFrom
+
+        dateFrom.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.picker, dateSetListenerFrom, calendarFrom
                 .get(Calendar.YEAR), calendarFrom.get(Calendar.MONTH),
                 calendarFrom.get(Calendar.DAY_OF_MONTH)).show());
 
-        dateTo.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.Datepicker, dateSetListenerTo, calendarTo
+        dateTo.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.picker, dateSetListenerTo, calendarTo
                 .get(Calendar.YEAR), calendarTo.get(Calendar.MONTH),
                 calendarTo.get(Calendar.DAY_OF_MONTH)).show());
+
+        startTimeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour = timeFrom.get(Calendar.HOUR_OF_DAY);
+                int minute = timeFrom.get(Calendar.MINUTE);
+                TimePickerDialog timePicker = new TimePickerDialog(BuildingDetailsActivity.this, R.style.picker, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        startTimeEditText.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                timePicker.show();
+            }
+        });
+
+        endTimeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour = timeTo.get(Calendar.HOUR_OF_DAY);
+                int minute = timeTo.get(Calendar.MINUTE);
+                TimePickerDialog timePicker = new TimePickerDialog(BuildingDetailsActivity.this, R.style.picker, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        endTimeEditText.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                timePicker.show();
+            }
+        });
 
         updateFreeSeats();
 
