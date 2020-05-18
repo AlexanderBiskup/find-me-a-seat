@@ -1,58 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment" >
+    tools:context=".ui.home.HomeFragment">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/home_bookings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/current_bookings" />
 
-            <TextView
-                android:id="@+id/home_overview"
-                android:layout_width="406dp"
-                android:layout_height="54dp"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:text="@string/Overview" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/home_all_bookings"
+            android:name="at.ac.univie.hci.findmeaseat.ui.bookings.RecentBookingsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            tools:layout="@layout/fragment_all_bookings" />
 
-            <TextView
-                android:id="@+id/home_bookings"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center_vertical|fill_vertical"
-                android:text="@string/upcoming_bookings" />
+        <TextView
+            android:id="@+id/home_buildings"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:text="Gemerkte Gebäude" />
 
-            <fragment
-                android:id="@+id/home_all_bookings"
-                android:name="at.ac.univie.hci.findmeaseat.ui.bookings.AllValidBookingsFragment"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                tools:layout="@layout/fragment_all_bookings" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/home_all_favorite_buildings"
+            android:name="at.ac.univie.hci.findmeaseat.ui.building.FavoriteBuildingsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            tools:layout="@layout/fragment_favorite_buildings" />
 
-            <TextView
-                android:id="@+id/home_buildings"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center_vertical|fill_vertical"
-                android:text="Favorite Buildings" />
-
-            <fragment
-                android:id="@+id/home_all_favorite_buildings"
-                android:name="at.ac.univie.hci.findmeaseat.ui.building.AllFavoriteBuildings"
-                android:layout_width="match_parent"
-                android:layout_height="291dp"
-                tools:layout="@layout/fragment_favorite_buildings" />
-
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

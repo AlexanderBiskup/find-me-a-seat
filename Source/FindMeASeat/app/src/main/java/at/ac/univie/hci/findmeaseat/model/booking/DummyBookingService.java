@@ -3,6 +3,7 @@ package at.ac.univie.hci.findmeaseat.model.booking;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
 import at.ac.univie.hci.findmeaseat.model.building.Address;
@@ -55,6 +56,14 @@ public final class DummyBookingService implements BookingService {
     @Override
     public List<Booking> getAllBookings() {
         return bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId());
+    }
+
+    @Override
+    public List<Booking> getCurrentBookings() {
+        return bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId())
+                .stream()
+                .filter(booking -> booking.getEnd().isAfter(now()) || booking.getStart().isAfter(now()))
+                .collect(Collectors.toList());
     }
 
     public void initializeDummyBookings(List<Building> buildings) {

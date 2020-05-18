@@ -30,6 +30,6 @@
     <string name="overview">Overview</string>
     <string name="Overview">Overview</string>
     <string name="Bookings">Bookings</string>
-    <string name="title_buildings" />
-    <string name="upcoming_bookings">Upcoming Bookings</string>
+    <string name="title_buildings">Gebäude</string>
+    <string name="current_bookings">Aktuelle Buchungen</string>
 </resources>

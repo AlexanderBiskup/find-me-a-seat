@@ -18,6 +18,6 @@ public interface BookingService {
 
     List<Booking> getAllBookings();
 
-    List<Booking> getAllValidBookings();
+    List<Booking> getCurrentBookings();
 
 }
