@@ -3,6 +3,7 @@ package at.ac.univie.hci.findmeaseat.ui.building;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
+import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteService;
+import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteServiceFactory;
 import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
 public class BuildingDetailsActivity extends AppCompatActivity {
@@ -27,7 +30,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     public static final String BUILDING_ID_EXTRA_NAME = "buildingId";
 
     private final BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
-    private boolean markedAsFavorite = true;
+    private final FavoriteService favoriteService = FavoriteServiceFactory.getSingletonInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +57,32 @@ public class BuildingDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        if(favoriteService.isFavorite(building)) {
+            displayAsFavorite(favoriteButton);
+        } else {
+            displayAsNotFavorite(favoriteButton);
+        }
+
         favoriteButton.setOnClickListener(v -> {
-            if(markedAsFavorite){
-                favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+            if(favoriteService.isFavorite(building)){
+                displayAsNotFavorite(favoriteButton);
                 Toast.makeText(this, "Von Startseite entfernt", Toast.LENGTH_SHORT).show();
-                markedAsFavorite = false;
+                favoriteService.removeFromFavorites(building);
             }else{
-                favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+                displayAsFavorite(favoriteButton);
                 Toast.makeText(this, "Zur Startseite hinzugefügt", Toast.LENGTH_SHORT).show();
-                markedAsFavorite = true;
+                favoriteService.addToFavorites(building);
             }
         });
 
+    }
+
+    private void displayAsFavorite(ImageButton favoriteButton) {
+        favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+    }
+
+    private void displayAsNotFavorite(ImageButton favoriteButton) {
+        favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
     }
 
 }

@@ -10,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import at.ac.univie.hci.findmeaseat.MainActivity;
 import at.ac.univie.hci.findmeaseat.R;
-import at.ac.univie.hci.findmeaseat.ui.login.Users;
+import at.ac.univie.hci.findmeaseat.model.user.AuthenticationService;
+import at.ac.univie.hci.findmeaseat.model.user.AuthenticationServiceFactory;
 
 
 public class LoginActivity extends AppCompatActivity {
+
+    private final AuthenticationService authenticationService = AuthenticationServiceFactory.getSingletonInstance();
 
     private TextView usernameTextView;
     private TextView passwordTextView;
@@ -28,13 +31,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String user = usernameTextView.getText().toString();
+        String username = usernameTextView.getText().toString();
         String password = passwordTextView.getText().toString();
-        Users users = new Users();
-        if (users.checkUser(user, password)) {
+
+        try {
+            authenticationService.authenticateUser(username, password);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        } else {
+        } catch (Throwable exception) {
             Toast.makeText(this, "Login fehlgeschlagen!", Toast.LENGTH_LONG).show();
         }
     }
