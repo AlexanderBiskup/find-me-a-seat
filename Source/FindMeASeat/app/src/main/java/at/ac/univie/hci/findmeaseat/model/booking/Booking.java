@@ -17,8 +17,8 @@ public final class Booking {
     private final LocalDateTime end;
 
 
-    public Booking(@NonNull UUID id, @NonNull UUID userId, @NonNull Seat seat, @NonNull LocalDateTime start, @NonNull LocalDateTime end) {
-        this.id = id;
+    public Booking(@NonNull UUID userId, @NonNull Seat seat, @NonNull LocalDateTime start, @NonNull LocalDateTime end) {
+        this.id = UUID.randomUUID();
         this.userId = userId;
         this.seat = seat;
         this.start = start;
@@ -29,7 +29,7 @@ public final class Booking {
         return id;
     }
 
-    public UUID getUserId() {
+    UUID getUserId() {
         return userId;
     }
 

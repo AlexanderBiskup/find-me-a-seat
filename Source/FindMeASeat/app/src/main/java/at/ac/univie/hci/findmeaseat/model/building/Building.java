@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ public final class Building {
 
     public Area getArea(String name) {
         Area area = areas.get(name);
-        if(area == null) throw new IllegalArgumentException("Area not found.");
+        if (area == null) throw new IllegalArgumentException("Area not found.");
         return area;
     }
 
@@ -49,19 +50,26 @@ public final class Building {
         return areas.values();
     }
 
-    public int maximalSeats(){
+    public int maximalSeats() {
         Random r = new SecureRandom();
-        return r.nextInt(1500-500) + 500;
+        return r.nextInt(1500 - 500) + 500;
     }
 
-    public int availableSeats(){
+    public int availableSeats() {
         Random r = new SecureRandom();
-        return r.nextInt(400-50) + 50;
+        return r.nextInt(400 - 50) + 50;
     }
 
-    public int floor(){
-        Random r = new SecureRandom();
-        return r.nextInt(8-1) + 1;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return Objects.equals(id, building.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
