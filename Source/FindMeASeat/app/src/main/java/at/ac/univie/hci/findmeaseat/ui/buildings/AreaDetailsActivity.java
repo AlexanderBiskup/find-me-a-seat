@@ -14,14 +14,14 @@ import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
-import at.ac.univie.hci.findmeaseat.model.building.service.DummyBuildingService;
+import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
 
 public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapter.SeatSelectionHandler {
 
     public static final String BUILDING_ID_EXTRA_NAME = "buildingId";
     public static final String AREA_NAME_EXTRA_NAME = "areaName";
 
-    private BuildingService buildingService = new DummyBuildingService(); // TODO use factory
+    private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
 
     private RecyclerView.Adapter seatsAdapter;
     private Seat selectedSeat;
@@ -51,7 +51,7 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     @Override
     public void select(Seat seat) {
         selectedSeat = seat;
-        seatsAdapter.notifyDataSetChanged(); // TODO use index to only update changed item
+        seatsAdapter.notifyDataSetChanged();
         TextView selectedSeatTextView = findViewById(R.id.selected_seat_text_view);
         selectedSeatTextView.setText(String.format("Auswahl: %s", seat.getName()));
     }

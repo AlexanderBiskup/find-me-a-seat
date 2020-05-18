@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -32,14 +31,11 @@ public class BuildingFragment extends Fragment {
         buildingAdapter = new BuildingAdapter(getContext(), buildingService.getAllBuildings());
         buildingList.setAdapter(buildingAdapter);
         filter.addTextChangedListener(new FilterTextWatcher());
-        buildingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Intent intent = new Intent(requireActivity(), BuildingDetailsActivity.class);
-                Building building = (Building) buildingAdapter.getItem(position);
-                intent.putExtra(BuildingDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
-                startActivity(intent);
-            }
+        buildingList.setOnItemClickListener((adapter, view, position, id) -> {
+            Intent intent = new Intent(requireActivity(), BuildingDetailsActivity.class);
+            Building building = (Building) buildingAdapter.getItem(position);
+            intent.putExtra(BuildingDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
+            startActivity(intent);
         });
         return root;
     }

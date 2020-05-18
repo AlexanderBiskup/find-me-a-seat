@@ -1,5 +1,6 @@
 package at.ac.univie.hci.findmeaseat.ui.building;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -18,6 +19,7 @@ import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
+import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
 public class BuildingDetailsActivity extends AppCompatActivity {
 
@@ -42,6 +44,14 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         List<String> areaNames = building.getAllAreas().stream().map(Area::getName).collect(Collectors.toList());
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, areaNames);
         areas.setAdapter(arrayAdapter);
+
+        areas.setOnItemClickListener((parent, view, position, id) -> {
+            Area area = building.getArea(areaNames.get(position));
+            Intent intent = new Intent(this, AreaDetailsActivity.class);
+            intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
+            intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, area.getName());
+            startActivity(intent);
+        });
 
         favoriteButton.setOnClickListener(v -> {
             if(flag){
