@@ -12,15 +12,15 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_building"
+        android:id="@+id/navigation_buildings"
         android:name="at.ac.univie.hci.findmeaseat.ui.building.BuildingFragment"
-        android:label="@string/title_building"
+        android:label="@string/title_buildings"
         tools:layout="@layout/fragment_building" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_user_profile"
         android:name="at.ac.univie.hci.findmeaseat.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_user_profile"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
