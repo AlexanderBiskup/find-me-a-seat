@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +27,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     public static final String BUILDING_ID_EXTRA_NAME = "buildingId";
 
     private final BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
-    private boolean flag = true;
+    private boolean markedAsFavorite = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +55,14 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         });
 
         favoriteButton.setOnClickListener(v -> {
-            if(flag){
-                favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
-                flag = false;
-            }else{
+            if(markedAsFavorite){
                 favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
-                flag = true;
+                Toast.makeText(this, "Von Startseite entfernt", Toast.LENGTH_SHORT).show();
+                markedAsFavorite = false;
+            }else{
+                favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+                Toast.makeText(this, "Zur Startseite hinzugefügt", Toast.LENGTH_SHORT).show();
+                markedAsFavorite = true;
             }
         });
 
