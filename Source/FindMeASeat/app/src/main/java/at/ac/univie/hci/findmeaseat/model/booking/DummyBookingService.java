@@ -49,7 +49,8 @@ public final class DummyBookingService implements BookingService {
     @Override
     public void bookAnySeat(Building building, Period period) {
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, period);
-        int randomSeatIndex = ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1;
+        if(freeSeats.isEmpty()) throw new IllegalArgumentException("No seats are available");
+        int randomSeatIndex = Math.max(ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1, 0);
         Seat selectedSeat = freeSeats.get(randomSeatIndex);
         bookSeat(selectedSeat, period);
     }

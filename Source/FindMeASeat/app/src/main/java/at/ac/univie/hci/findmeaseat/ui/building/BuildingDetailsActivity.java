@@ -134,9 +134,14 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     }
 
     public void performQuickBooking(View view) {
-        bookingService.bookAnySeat(building, getPeriod());
-        Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
-        updateFreeSeats();
+        try {
+            bookingService.bookAnySeat(building, getPeriod());
+            Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
+            updateFreeSeats();
+        } catch (Throwable exception) {
+            Toast.makeText(this, "Keine Plätze mehr frei", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private Period getPeriod() {
