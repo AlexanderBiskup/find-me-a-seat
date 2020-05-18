@@ -108,6 +108,8 @@ public class BuildingDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AreaDetailsActivity.class);
             intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
             intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, area.getName());
+            intent.putExtra(AreaDetailsActivity.START_DATE_EXTRA_NAME, getPeriod().getStart().toString());
+            intent.putExtra(AreaDetailsActivity.END_DATE_EXTRA_NAME, getPeriod().getEnd().toString());
             startActivity(intent);
         });
 
@@ -132,9 +134,14 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     }
 
     public void performQuickBooking(View view) {
-        bookingService.bookAnySeat(building, getPeriod());
-        Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
-        updateFreeSeats();
+        try {
+            bookingService.bookAnySeat(building, getPeriod());
+            Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
+            updateFreeSeats();
+        } catch (Throwable exception) {
+            Toast.makeText(this, "Keine Plätze mehr frei", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private Period getPeriod() {

@@ -2,8 +2,10 @@ package at.ac.univie.hci.findmeaseat.model.building;
 
 import androidx.annotation.NonNull;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -44,8 +46,10 @@ public final class Building {
         return address;
     }
 
-    public Collection<Area> getAllAreas() {
-        return areas.values();
+    public List<Area> getAllAreas() {
+        List<Area> areas = new ArrayList<>(this.areas.values());
+        areas.sort(Comparator.comparing(Area::getName));
+        return areas;
     }
 
     public int maximalSeats() {

@@ -1,13 +1,14 @@
 package at.ac.univie.hci.findmeaseat.model.booking;
 
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
-import at.ac.univie.hci.findmeaseat.model.building.Address;
-import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
 import at.ac.univie.hci.findmeaseat.model.user.AuthenticationService;
@@ -48,33 +49,54 @@ public final class DummyBookingService implements BookingService {
     @Override
     public void bookAnySeat(Building building, Period period) {
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, period);
-        int randomSeatIndex = ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1;
+        if (freeSeats.isEmpty()) throw new IllegalArgumentException("No seats are available");
+        int randomSeatIndex = Math.max(ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1, 0);
         Seat selectedSeat = freeSeats.get(randomSeatIndex);
         bookSeat(selectedSeat, period);
     }
 
     @Override
     public List<Booking> getAllBookings() {
-        return bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId());
+        List<Booking> bookings = bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId());
+        return sortBookings(bookings);
     }
 
     @Override
     public List<Booking> getCurrentBookings() {
-        return bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId())
+        List<Booking> bookings = bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId())
                 .stream()
                 .filter(booking -> booking.getEnd().isAfter(now()) || booking.getStart().isAfter(now()))
                 .collect(Collectors.toList());
+        return sortBookings(bookings);
     }
 
     public void initializeDummyBookings(List<Building> buildings) {
-        Address address = new Address("Währingerstraße 29", "Wien", "1180");
-        Building building = new Building("Fakultät für Informatik", address);
-        building.addArea("1. Stock");
-        Area area = building.getArea("1. Stock");
-        area.addSeat("A1");
-        Seat seat = area.getSeat("A1");
-        bookingRepository.save(new Booking(randomUUID(), seat, now(), now().plusHours(1)));
-        bookingRepository.save(new Booking(randomUUID(), seat, now().minusHours(3), now().minusHours(2)));
+        Period period = new Period(now().minusMinutes(5), now().plusMinutes(55));
+        for (Building building : buildings) {
+            List<Seat> freeSeats = seatStatusService.getFreeSeats(building, period);
+            int bookingCount = ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1);
+            Set<Integer> randomSeatIndices = new HashSet<>();
+            for (int i = 0; i < bookingCount * 3; ++i) {
+                int randomIndex = Math.max(ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1, 0);
+                randomSeatIndices.add(randomIndex);
+            }
+            for (int index : randomSeatIndices) {
+                Seat seat = freeSeats.get(index);
+                Booking booking = new Booking(randomUUID(), seat, period.getStart(), period.getEnd());
+                Booking bookingYesterday = new Booking(randomUUID(), seat, period.getStart().minusDays(1), period.getEnd().minusDays(1));
+                bookingRepository.save(booking);
+                bookingRepository.save(bookingYesterday);
+                if (index % 2 == 0) {
+                    Booking bookingTomorrow = new Booking(randomUUID(), seat, period.getStart().plusDays(1), period.getEnd().plusDays(1));
+                    bookingRepository.save(bookingTomorrow);
+                }
+            }
+        }
+    }
+
+    private List<Booking> sortBookings(List<Booking> bookings) {
+        bookings.sort(Comparator.comparing(Booking::getStart));
+        return bookings;
     }
 
 }

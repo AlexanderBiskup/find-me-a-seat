@@ -3,6 +3,7 @@ package at.ac.univie.hci.findmeaseat.model.building.service;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,9 @@ public class DummyBuildingService implements BuildingService {
 
     @Override
     public List<Building> getAllBuildings() {
-        return new ArrayList<>(buildings.values());
+        List<Building> buildings = new ArrayList<>(this.buildings.values());
+        buildings.sort(Comparator.comparing(Building::getName));
+        return buildings;
     }
 
     public void initializeDummyBuildings(Context context) {
