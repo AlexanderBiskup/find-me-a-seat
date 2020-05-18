@@ -33,11 +33,10 @@ public class BuildingDetailsActivity extends AppCompatActivity {
 
         UUID buildingId = UUID.fromString(getIntent().getStringExtra(BUILDING_ID_EXTRA_NAME));
         Building building = buildingService.getBuildingById(buildingId);
-        TextView buildingName = findViewById(R.id.building_name_view);
+        setTitle(building.getName());
         TextView seats = findViewById(R.id.seats_view);
         ListView areas = findViewById(R.id.area_list);
         ImageButton favoriteButton = findViewById(R.id.favorite_button);
-        buildingName.setText(building.getName());
 
         seats.setText(String.format(Locale.GERMAN, "%d / %d", building.availableSeats(), building.maximalSeats()));
         List<String> areaNames = building.getAllAreas().stream().map(Area::getName).collect(Collectors.toList());

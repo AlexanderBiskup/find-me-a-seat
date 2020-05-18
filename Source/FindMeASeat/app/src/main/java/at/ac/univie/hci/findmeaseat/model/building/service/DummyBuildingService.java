@@ -29,7 +29,11 @@ public class DummyBuildingService implements BuildingService {
     public void initializeDummyBuildings(Context context) {
         CSVBuildingLoader loader = new CSVBuildingLoader();
         List<Building> buildings = loader.loadBuildings(context);
-        buildings.forEach((building) -> this.buildings.put(building.getId(), building));
+        buildings.forEach((building) -> {
+            building.addArea("1. Stock");
+            building.addArea("2. Stock");
+            this.buildings.put(building.getId(), building);
+        });
     }
 
 }

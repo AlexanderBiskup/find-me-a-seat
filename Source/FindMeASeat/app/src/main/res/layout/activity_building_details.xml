@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,7 +35,7 @@
         style="@style/DividerH"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="@android:color/black"
+        android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +46,7 @@
         style="@style/DividerV"
         android:layout_width="1dp"
         android:layout_height="50dp"
-        android:background="@android:color/black"
+        android:background="?android:attr/listDivider"
         android:layout_marginStart="210dp"
         android:layout_marginEnd="210dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,41 +58,28 @@
         style="@style/DividerH"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="@android:color/black"
+        android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-    <TextView
-        android:id="@+id/building_name_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
-        android:text="Gebäude A"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         style="@style/DividerH"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/black"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/building_name_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view2"
         style="@style/DividerV"
         android:layout_width="1dp"
         android:layout_height="50dp"
-        android:background="@android:color/black"
+        android:background="?android:attr/listDivider"
         android:layout_marginStart="210dp"
         android:layout_marginEnd="210dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,19 +114,16 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="64dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginEnd="331dp"
-        android:layout_marginBottom="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="Bereiche"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/area_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
         android:id="@+id/textView2"
@@ -187,15 +170,12 @@
 
     <ListView
         android:id="@+id/area_list"
-        android:layout_width="wrap_content"
-        android:layout_height="253dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/frame"
-        android:divider="#F0000000"
-        android:dividerHeight="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:dividerHeight="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
 
     <EditText
         android:id="@+id/from_time"
