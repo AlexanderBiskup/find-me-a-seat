@@ -49,7 +49,7 @@ public final class DummyBookingService implements BookingService {
     @Override
     public void bookAnySeat(Building building, Period period) {
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, period);
-        if(freeSeats.isEmpty()) throw new IllegalArgumentException("No seats are available");
+        if (freeSeats.isEmpty()) throw new IllegalArgumentException("No seats are available");
         int randomSeatIndex = Math.max(ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1, 0);
         Seat selectedSeat = freeSeats.get(randomSeatIndex);
         bookSeat(selectedSeat, period);
@@ -83,7 +83,13 @@ public final class DummyBookingService implements BookingService {
             for (int index : randomSeatIndices) {
                 Seat seat = freeSeats.get(index);
                 Booking booking = new Booking(randomUUID(), seat, period.getStart(), period.getEnd());
+                Booking bookingYesterday = new Booking(randomUUID(), seat, period.getStart().minusDays(1), period.getEnd().minusDays(1));
                 bookingRepository.save(booking);
+                bookingRepository.save(bookingYesterday);
+                if (index % 2 == 0) {
+                    Booking bookingTomorrow = new Booking(randomUUID(), seat, period.getStart().plusDays(1), period.getEnd().plusDays(1));
+                    bookingRepository.save(bookingTomorrow);
+                }
             }
         }
     }
