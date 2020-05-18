@@ -47,8 +47,4 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
         return bookingService.getBookingById(bookingId);
     }
 
-    @Override
-    public void onClick(UUID bookingId) {
-    }
-
 }

@@ -2,7 +2,7 @@
     <string name="app_name">FindMeASeat</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_all_bookings">Alle Buchungen</string>
     <string name="filterUniversity">Filter</string>
     <string-array name="buildings_array">
         <item>Fakultät für Informatik</item>

@@ -37,12 +37,7 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     @Override
     public void onBindViewHolder(@NonNull SeatViewHolder holder, int position) {
         final Seat seat = seats.get(position);
-        holder.parentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                seatSelectionHandler.select(seat);
-            }
-        });
+        holder.parentView.setOnClickListener(v -> seatSelectionHandler.select(seat));
         holder.textView.setText(seat.getName());
         if(seatSelectionHandler.isSelected(seat)) {
             holder.textView.setBackgroundColor(context.getColor(R.color.colorAccent));
