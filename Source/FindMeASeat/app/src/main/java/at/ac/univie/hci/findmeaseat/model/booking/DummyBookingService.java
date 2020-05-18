@@ -29,6 +29,7 @@ public final class DummyBookingService implements BookingService {
         bookings.add(new Booking(randomUUID(), randomUUID(), seat, now().minusHours(3), now().minusHours(2)));
         bookings.add(new Booking(randomUUID(), randomUUID(), seat, now().minusHours(6), now().minusHours(5)));
         bookings.add(new Booking(randomUUID(), randomUUID(), seat, now().minusHours(11), now().minusHours(10)));
+        bookings.add(new Booking(randomUUID(), randomUUID(), seat, now().plusHours(11), now().plusHours(10)));
     }
 
     @Override

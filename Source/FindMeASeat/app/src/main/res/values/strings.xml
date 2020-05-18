@@ -31,4 +31,5 @@
     <string name="Overview">Overview</string>
     <string name="Bookings">Bookings</string>
     <string name="title_buildings" />
+    <string name="upcoming_bookings">Upcoming Bookings</string>
 </resources>

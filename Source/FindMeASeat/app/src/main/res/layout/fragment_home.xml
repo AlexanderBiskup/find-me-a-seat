@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical|fill_vertical"
-                android:text="@string/Upcoming Bookings" />
+                android:text="@string/upcoming_bookings" />
 
             <fragment
                 android:id="@+id/home_all_bookings"
@@ -44,6 +44,13 @@
                 android:layout_height="48dp"
                 android:gravity="center_vertical|fill_vertical"
                 android:text="Favorite Buildings" />
+
+            <fragment
+                android:id="@+id/home_all_favorite_buildings"
+                android:name="at.ac.univie.hci.findmeaseat.ui.building.AllFavoriteBuildings"
+                android:layout_width="match_parent"
+                android:layout_height="291dp"
+                tools:layout="@layout/fragment_favorite_buildings" />
 
         </LinearLayout>
     </ScrollView>
