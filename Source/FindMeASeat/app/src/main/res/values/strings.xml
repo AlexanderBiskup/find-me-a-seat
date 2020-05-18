@@ -32,4 +32,9 @@
     <string name="Bookings">Bookings</string>
     <string name="title_buildings">Gebäude</string>
     <string name="current_bookings">Aktuelle Buchungen</string>
+    <string name="matrikelnummer">Matrikelnummer</string>
+    <string name="vorname">Vorname</string>
+    <string name="nachname">Nachname</string>
+    <string name="e_mail_adresse">E-Mail Adresse</string>
+    <string name="log_out">Log Out</string>
 </resources>
