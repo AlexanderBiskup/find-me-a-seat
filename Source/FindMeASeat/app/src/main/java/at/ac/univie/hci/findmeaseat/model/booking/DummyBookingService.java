@@ -1,5 +1,6 @@
 package at.ac.univie.hci.findmeaseat.model.booking;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -55,15 +56,17 @@ public final class DummyBookingService implements BookingService {
 
     @Override
     public List<Booking> getAllBookings() {
-        return bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId());
+        List<Booking> bookings = bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId());
+        return sortBookings(bookings);
     }
 
     @Override
     public List<Booking> getCurrentBookings() {
-        return bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId())
+        List<Booking> bookings = bookingRepository.findByUser(authenticationService.getAuthenticatedUser().getId())
                 .stream()
                 .filter(booking -> booking.getEnd().isAfter(now()) || booking.getStart().isAfter(now()))
                 .collect(Collectors.toList());
+        return sortBookings(bookings);
     }
 
     public void initializeDummyBookings(List<Building> buildings) {
@@ -75,6 +78,12 @@ public final class DummyBookingService implements BookingService {
         Seat seat = area.getSeat("A1");
         bookingRepository.save(new Booking(randomUUID(), seat, now(), now().plusHours(1)));
         bookingRepository.save(new Booking(randomUUID(), seat, now().minusHours(3), now().minusHours(2)));
+        // TODO implement
+    }
+
+    private List<Booking> sortBookings(List<Booking> bookings) {
+        bookings.sort(Comparator.comparing(Booking::getStart));
+        return bookings;
     }
 
 }

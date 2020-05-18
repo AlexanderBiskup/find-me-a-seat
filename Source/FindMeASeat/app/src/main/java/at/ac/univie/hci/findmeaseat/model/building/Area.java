@@ -1,7 +1,10 @@
 package at.ac.univie.hci.findmeaseat.model.building;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -36,7 +39,9 @@ public final class Area {
     }
 
     public Collection<Seat> getAllSeats() {
-        return seats.values();
+        List<Seat> seats = new ArrayList<>(this.seats.values());
+        seats.sort(Comparator.comparing(Seat::getName));
+        return seats;
     }
 
     @Override
