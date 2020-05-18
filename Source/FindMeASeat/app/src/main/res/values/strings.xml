@@ -26,5 +26,8 @@
     <string name="username">Benutzername</string>
     <string name="welcome_to_the_app">Welcome to the App!</string>
     <string name="passwort">Passwort</string>
-    <string name="title_buildings">Gebäude</string>
+    <string name="title_building">Building</string>
+    <string name="overview">Overview</string>
+    <string name="Overview">Overview</string>
+    <string name="Bookings">Bookings</string>
 </resources>
