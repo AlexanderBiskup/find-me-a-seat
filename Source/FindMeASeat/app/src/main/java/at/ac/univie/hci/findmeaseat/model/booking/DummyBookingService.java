@@ -1,14 +1,14 @@
 package at.ac.univie.hci.findmeaseat.model.booking;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
-import at.ac.univie.hci.findmeaseat.model.building.Address;
-import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
 import at.ac.univie.hci.findmeaseat.model.user.AuthenticationService;
@@ -70,15 +70,21 @@ public final class DummyBookingService implements BookingService {
     }
 
     public void initializeDummyBookings(List<Building> buildings) {
-        Address address = new Address("Währingerstraße 29", "Wien", "1180");
-        Building building = new Building("Fakultät für Informatik", address);
-        building.addArea("1. Stock");
-        Area area = building.getArea("1. Stock");
-        area.addSeat("A1");
-        Seat seat = area.getSeat("A1");
-        bookingRepository.save(new Booking(randomUUID(), seat, now(), now().plusHours(1)));
-        bookingRepository.save(new Booking(randomUUID(), seat, now().minusHours(3), now().minusHours(2)));
-        // TODO implement
+        Period period = new Period(now().minusMinutes(5), now().plusMinutes(55));
+        for (Building building : buildings) {
+            List<Seat> freeSeats = seatStatusService.getFreeSeats(building, period);
+            int bookingCount = ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1);
+            Set<Integer> randomSeatIndices = new HashSet<>();
+            for (int i = 0; i < bookingCount * 3; ++i) {
+                int randomIndex = Math.max(ThreadLocalRandom.current().nextInt(0, freeSeats.size() + 1) - 1, 0);
+                randomSeatIndices.add(randomIndex);
+            }
+            for (int index : randomSeatIndices) {
+                Seat seat = freeSeats.get(index);
+                Booking booking = new Booking(randomUUID(), seat, period.getStart(), period.getEnd());
+                bookingRepository.save(booking);
+            }
+        }
     }
 
     private List<Booking> sortBookings(List<Booking> bookings) {
