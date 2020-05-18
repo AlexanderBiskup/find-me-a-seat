@@ -2,12 +2,10 @@ package at.ac.univie.hci.findmeaseat.model.building;
 
 import androidx.annotation.NonNull;
 
-import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 public final class Building {
@@ -51,13 +49,7 @@ public final class Building {
     }
 
     public int maximalSeats() {
-        Random r = new SecureRandom();
-        return r.nextInt(1500 - 500) + 500;
-    }
-
-    public int availableSeats() {
-        Random r = new SecureRandom();
-        return r.nextInt(400 - 50) + 50;
+        return getAllAreas().stream().map(area -> area.getAllSeats().size()).reduce(0, Integer::sum);
     }
 
     @Override

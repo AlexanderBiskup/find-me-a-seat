@@ -20,11 +20,12 @@ import at.ac.univie.hci.findmeaseat.model.booking.BookingServiceFactory;
 public class AllBookingsFragment extends Fragment implements BookingsAdapter.SelectBookingHandler {
 
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
+    private BookingsAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
-        BookingsAdapter adapter = new BookingsAdapter(bookingService.getAllBookings(), inflater, this);
+        adapter = new BookingsAdapter(bookingService.getAllBookings(), inflater, this);
         bookingsRecyclerView.setAdapter(adapter);
         LayoutManager layoutManager = new LinearLayoutManager(getContext());
         bookingsRecyclerView.setLayoutManager(layoutManager);

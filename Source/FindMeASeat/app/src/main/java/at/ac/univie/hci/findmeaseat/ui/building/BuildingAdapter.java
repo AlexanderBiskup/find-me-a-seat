@@ -15,18 +15,25 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import at.ac.univie.hci.findmeaseat.R;
+import at.ac.univie.hci.findmeaseat.model.booking.Period;
+import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
+import at.ac.univie.hci.findmeaseat.model.building.Seat;
+
+import static java.time.LocalDateTime.now;
 
 public class BuildingAdapter extends BaseAdapter implements Filterable {
 
     private final Context context;
     private final List<Building> buildings;
     private List<Building> filteredBuildings;
+    private final SeatStatusService seatStatusService;
 
-    BuildingAdapter(Context context, List<Building> buildings) {
+    BuildingAdapter(Context context, List<Building> buildings, SeatStatusService seatStatusService) {
         this.context = context;
         this.buildings = buildings;
         this.filteredBuildings = buildings;
+        this.seatStatusService = seatStatusService;
     }
 
     @Override
@@ -59,7 +66,8 @@ public class BuildingAdapter extends BaseAdapter implements Filterable {
 
         buildingName.setText(buildingItem.getName());
         buildingAddress.setText(buildingItem.getAddress().getStreet());
-        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", buildingItem.availableSeats(), buildingItem.maximalSeats()));
+        List<Seat> freeSeats = seatStatusService.getFreeSeats(buildingItem, new Period(now(), now().plusMinutes(1)));
+        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", freeSeats.size(), buildingItem.maximalSeats()));
         return convertView;
     }
 

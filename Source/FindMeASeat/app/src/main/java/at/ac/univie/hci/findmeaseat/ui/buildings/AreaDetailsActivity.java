@@ -7,14 +7,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.R;
+import at.ac.univie.hci.findmeaseat.model.booking.Period;
+import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
+import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusServiceFactory;
 import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
+
+import static java.time.LocalDateTime.now;
 
 public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapter.SeatSelectionHandler {
 
@@ -22,6 +28,7 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     public static final String AREA_NAME_EXTRA_NAME = "areaName";
 
     private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
+    private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
 
     private RecyclerView.Adapter seatsAdapter;
     private Seat selectedSeat;
@@ -39,7 +46,7 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
         RecyclerView seatsRecyclerView = findViewById(R.id.seatsRecyclerView);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 5);
         seatsRecyclerView.setLayoutManager(layoutManager);
-        seatsAdapter = new SeatsAdapter(area.getAllSeats(),this, this);
+        seatsAdapter = new SeatsAdapter(area.getAllSeats(),this, this, seatStatusService, new Period(now(), now().plusHours(1)));
         seatsRecyclerView.setAdapter(seatsAdapter);
     }
 

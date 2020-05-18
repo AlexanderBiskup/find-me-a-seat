@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import at.ac.univie.hci.findmeaseat.model.building.AreaSeatGenerator;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 
 public class DummyBuildingService implements BuildingService {
 
-    private Map<UUID, Building> buildings = new HashMap<>();
+    private final Map<UUID, Building> buildings = new HashMap<>();
+    private final AreaSeatGenerator seatGenerator = new AreaSeatGenerator();
 
     @Override
     public Building getBuildingById(UUID id) {
-        Building building =  buildings.get(id);
-        if(building == null) throw new IllegalArgumentException("Invalid building id.");
+        Building building = buildings.get(id);
+        if (building == null) throw new IllegalArgumentException("Invalid building id.");
         return building;
     }
 
@@ -29,11 +31,8 @@ public class DummyBuildingService implements BuildingService {
     public void initializeDummyBuildings(Context context) {
         CSVBuildingLoader loader = new CSVBuildingLoader();
         List<Building> buildings = loader.loadBuildings(context);
-        buildings.forEach((building) -> {
-            building.addArea("1. Stock");
-            building.addArea("2. Stock");
-            this.buildings.put(building.getId(), building);
-        });
+        seatGenerator.generateSeats(buildings);
+        buildings.forEach(building -> this.buildings.put(building.getId(), building));
     }
 
 }
