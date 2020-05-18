@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -15,6 +14,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -36,8 +39,6 @@ import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteService;
 import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteServiceFactory;
 import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
-import static java.time.LocalDateTime.now;
-
 public class BuildingDetailsActivity extends AppCompatActivity {
 
     public static final String BUILDING_ID_EXTRA_NAME = "buildingId";
@@ -49,6 +50,8 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private final Calendar calendarFrom = Calendar.getInstance();
     private final Calendar calendarTo = Calendar.getInstance();
     private Building building;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.GERMAN);
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,54 +61,44 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         UUID buildingId = UUID.fromString(getIntent().getStringExtra(BUILDING_ID_EXTRA_NAME));
         this.building = buildingService.getBuildingById(buildingId);
         setTitle(building.getName());
-        TextView seats = findViewById(R.id.seats_view);
         ListView areas = findViewById(R.id.area_list);
         EditText dateFrom = findViewById(R.id.from_date);
         EditText dateTo = findViewById(R.id.to_date);
+        EditText startTimeEditText = findViewById(R.id.from_time);
+        EditText endTimeEditText = findViewById(R.id.to_time);
         ImageButton favoriteButton = findViewById(R.id.favorite_button);
 
-        DatePickerDialog.OnDateSetListener dateSetListenerFrom = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                calendarFrom.set(Calendar.YEAR, year);
-                calendarFrom.set(Calendar.MONTH, month);
-                calendarFrom.set(Calendar.DAY_OF_MONTH, day);
-                String dateFormat = "MM/dd/yy";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.GERMAN);
-                dateFrom.setText(simpleDateFormat.format(calendarFrom.getTime()));
-            }
+        dateFrom.setText(dateFormat.format(calendarFrom.getTime()));
+        dateTo.setText(dateFormat.format(calendarTo.getTime()));
+        startTimeEditText.setText(LocalTime.now().format(timeFormatter));
+        endTimeEditText.setText(LocalTime.now().plusHours(1).format(timeFormatter));
+
+        DatePickerDialog.OnDateSetListener dateSetListenerFrom = (view, year, month, day) -> {
+            calendarFrom.set(Calendar.YEAR, year);
+            calendarFrom.set(Calendar.MONTH, month);
+            calendarFrom.set(Calendar.DAY_OF_MONTH, day);
+            dateFrom.setText(dateFormat.format(calendarFrom.getTime()));
+            updateFreeSeats();
         };
 
-        DatePickerDialog.OnDateSetListener dateSetListenerTo = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                calendarTo.set(Calendar.YEAR, year);
-                calendarTo.set(Calendar.MONTH, month);
-                calendarTo.set(Calendar.DAY_OF_MONTH, day);
-                String dateFormat = "MM/dd/yy";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.GERMAN);
-                dateTo.setText(simpleDateFormat.format(calendarTo.getTime()));
-            }
+        DatePickerDialog.OnDateSetListener dateSetListenerTo = (view, year, month, day) -> {
+            calendarTo.set(Calendar.YEAR, year);
+            calendarTo.set(Calendar.MONTH, month);
+            calendarTo.set(Calendar.DAY_OF_MONTH, day);
+            dateTo.setText(dateFormat.format(calendarTo.getTime()));
+            updateFreeSeats();
         };
 
-        dateFrom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(BuildingDetailsActivity.this, R.style.Datepicker, dateSetListenerFrom, calendarFrom
-                        .get(Calendar.YEAR), calendarFrom.get(Calendar.MONTH),
-                        calendarFrom.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        dateTo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(BuildingDetailsActivity.this, R.style.Datepicker, dateSetListenerTo, calendarTo
-                        .get(Calendar.YEAR), calendarTo.get(Calendar.MONTH),
-                        calendarTo.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        List<Seat> freeSeats = seatStatusService.getFreeSeats(building, new Period(now(), now().plusHours(1)));
-        seats.setText(String.format(Locale.GERMAN, "%d / %d", freeSeats.size(), building.maximalSeats()));
+        dateFrom.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.Datepicker, dateSetListenerFrom, calendarFrom
+                .get(Calendar.YEAR), calendarFrom.get(Calendar.MONTH),
+                calendarFrom.get(Calendar.DAY_OF_MONTH)).show());
+
+        dateTo.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.Datepicker, dateSetListenerTo, calendarTo
+                .get(Calendar.YEAR), calendarTo.get(Calendar.MONTH),
+                calendarTo.get(Calendar.DAY_OF_MONTH)).show());
+
+        updateFreeSeats();
+
         List<String> areaNames = building.getAllAreas().stream().map(Area::getName).collect(Collectors.toList());
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, areaNames);
         areas.setAdapter(arrayAdapter);
@@ -139,8 +132,21 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     }
 
     public void performQuickBooking(View view) {
-        bookingService.bookAnySeat(building, new Period(now(), now().plusHours(1)));
+        bookingService.bookAnySeat(building, getPeriod());
         Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
+        updateFreeSeats();
+    }
+
+    private Period getPeriod() {
+        EditText startTimeEditText = findViewById(R.id.from_time);
+        LocalTime startTime = LocalTime.parse(startTimeEditText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+        EditText endTimeEditText = findViewById(R.id.to_time);
+        LocalTime endTime = LocalTime.parse(endTimeEditText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+        LocalDateTime startDateTime = calendarFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                .withHour(startTime.getHour()).withMinute(startTime.getMinute());
+        LocalDateTime endDateTime = calendarTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                .withHour(endTime.getHour()).withMinute(endTime.getMinute());
+        return new Period(startDateTime, endDateTime);
     }
 
     private void displayAsFavorite(ImageButton favoriteButton) {
@@ -149,6 +155,12 @@ public class BuildingDetailsActivity extends AppCompatActivity {
 
     private void displayAsNotFavorite(ImageButton favoriteButton) {
         favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+    }
+
+    private void updateFreeSeats() {
+        TextView seats = findViewById(R.id.seats_view);
+        List<Seat> freeSeats = seatStatusService.getFreeSeats(building, getPeriod());
+        seats.setText(String.format(Locale.GERMAN, "%d / %d", freeSeats.size(), building.maximalSeats()));
     }
 
 }
