@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,11 @@ public class FavoriteBuildingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_favorite_buildings, container, false);
 
+        TextView noFavoritesTextView = root.findViewById(R.id.no_favorites_message);
+        if(favoriteService.getAllFavorites().isEmpty()){
+            noFavoritesTextView.setText("Es gibt keine gemerkte Gebäude!");
+        }
+
         final ListView buildings = root.findViewById(R.id.favorite_building_list);
         BuildingAdapter buildingAdapter = new BuildingAdapter(getContext(), favoriteService.getAllFavorites(), seatStatusService);
         buildings.setAdapter(buildingAdapter);
@@ -39,11 +45,7 @@ public class FavoriteBuildingsFragment extends Fragment {
             startActivity(intent);
         });
 
-
-
         return root;
     }
-
-
 
 }

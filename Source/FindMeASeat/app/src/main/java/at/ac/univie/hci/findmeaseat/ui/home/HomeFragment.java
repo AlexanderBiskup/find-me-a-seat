@@ -13,7 +13,8 @@ import at.ac.univie.hci.findmeaseat.R;
 public class HomeFragment extends Fragment {
     private boolean refreshOnResume = false;
 
-    public HomeFragment() { }
+    public HomeFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(refreshOnResume){
-            getActivity().finish();
-            startActivity(getActivity().getIntent());
+        if (refreshOnResume) {
+            requireActivity().finish();
+            startActivity(requireActivity().getIntent());
         }
     }
 
