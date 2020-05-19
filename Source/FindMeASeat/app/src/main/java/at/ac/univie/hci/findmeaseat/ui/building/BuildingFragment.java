@@ -57,6 +57,12 @@ public class BuildingFragment extends Fragment {
         @Override
         public void afterTextChanged(Editable s) {
         }
-
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        buildingAdapter.notifyDataSetChanged();
+    }
+
 }
