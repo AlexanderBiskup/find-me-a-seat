@@ -31,7 +31,7 @@ public class FavoriteBuildingsFragment extends Fragment {
 
         TextView noFavoritesTextView = root.findViewById(R.id.no_favorites_message);
         if(favoriteService.getAllFavorites().isEmpty()){
-            noFavoritesTextView.setText("Es gibt keine gemerkte Gebäude!");
+            noFavoritesTextView.setText("Keine gemerkten Gebäude vorhanden");
         }
 
         final ListView buildings = root.findViewById(R.id.favorite_building_list);

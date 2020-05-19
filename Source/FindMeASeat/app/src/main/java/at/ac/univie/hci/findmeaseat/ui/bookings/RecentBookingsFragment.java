@@ -22,18 +22,16 @@ import at.ac.univie.hci.findmeaseat.model.booking.BookingServiceFactory;
 public class RecentBookingsFragment extends Fragment implements BookingsAdapter.SelectBookingHandler {
 
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
-    TextView norecents;
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
+        View root = inflater.inflate(R.layout.fragment_recent_bookings, container, false);
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
 
-        norecents = root.findViewById(R.id.no_bookings_message);
-        if(bookingService.getCurrentBookings().size() == 0){
-            norecents.setText("Es gibt keine aktuelle Buchungen!");
+        TextView noRecentBookingsTextView = root.findViewById(R.id.no_recent_bookings);
+        if (bookingService.getCurrentBookings().isEmpty()) {
+            noRecentBookingsTextView.setText("Keine aktuellen Buchungen vorhanden");
         }
-
 
         BookingsAdapter adapter = new BookingsAdapter(bookingService.getCurrentBookings(), inflater, this);
         bookingsRecyclerView.setAdapter(adapter);
