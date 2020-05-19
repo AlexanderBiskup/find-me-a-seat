@@ -23,7 +23,6 @@
         android:layout_height="350dp"
         android:foregroundGravity="center"
         android:gravity="center"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/favorite_building_list"
         app:layout_constraintEnd_toEndOf="@+id/favorite_building_list"
         app:layout_constraintStart_toStartOf="parent"
