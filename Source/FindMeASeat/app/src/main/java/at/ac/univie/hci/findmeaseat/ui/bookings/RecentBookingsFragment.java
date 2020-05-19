@@ -30,7 +30,7 @@ public class RecentBookingsFragment extends Fragment implements BookingsAdapter.
 
         TextView noRecentBookingsTextView = root.findViewById(R.id.no_recent_bookings);
         if (bookingService.getCurrentBookings().isEmpty()) {
-            noRecentBookingsTextView.setText("Es gibt keine aktuelle Buchungen!");
+            noRecentBookingsTextView.setText("Keine aktuellen Buchungen vorhanden");
         }
 
         BookingsAdapter adapter = new BookingsAdapter(bookingService.getCurrentBookings(), inflater, this);

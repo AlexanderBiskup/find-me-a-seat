@@ -27,7 +27,7 @@ public class AllBookingsFragment extends Fragment implements BookingsAdapter.Sel
 
         if (bookingService.getAllBookings().isEmpty()) {
             TextView noBookingsTextView = root.findViewById(R.id.no_bookings_message);
-            noBookingsTextView.setText("Es gibt keine Buchungen!");
+            noBookingsTextView.setText("Keine Buchungen vorhanden");
         }
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
         BookingsAdapter adapter = new BookingsAdapter(bookingService.getAllBookings(), inflater, this);
