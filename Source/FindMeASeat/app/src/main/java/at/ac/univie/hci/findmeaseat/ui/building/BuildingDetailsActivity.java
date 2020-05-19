@@ -1,11 +1,8 @@
 package at.ac.univie.hci.findmeaseat.ui.building;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -14,12 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -37,6 +30,8 @@ import at.ac.univie.hci.findmeaseat.model.building.service.BuildingService;
 import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactory;
 import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteService;
 import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteServiceFactory;
+import at.ac.univie.hci.findmeaseat.ui.DatePickerHandler;
+import at.ac.univie.hci.findmeaseat.ui.TimePickerHandler;
 import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
 import static java.lang.String.format;
@@ -49,14 +44,30 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private final FavoriteService favoriteService = FavoriteServiceFactory.getSingletonInstance();
     private final SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
     private final BookingService bookingService = BookingServiceFactory.getSingletonInstance();
-    private final Calendar calendarFrom = Calendar.getInstance();
-    private final Calendar calendarTo = Calendar.getInstance();
-    private final Calendar timeFrom = Calendar.getInstance();
-    private final Calendar timeTo = Calendar.getInstance();
+
     private Building building;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.GERMAN);
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     private AreasAdapter areasAdapter;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private LocalDateTime startDate = LocalDateTime.now();
+    private LocalDateTime endDate = LocalDateTime.now().plusHours(1);
+
+    private final DatePickerHandler startDatePickerHandler = new DatePickerHandler(this, this.startDate, dateFormatter, updatedDate -> {
+        startDate = updatedDate;
+        updateFreeSeats();
+    });
+    private final DatePickerHandler endDatePickerHandler = new DatePickerHandler(this, this.endDate, dateFormatter, updatedDate -> {
+        endDate = updatedDate;
+        updateFreeSeats();
+    });
+    private final TimePickerHandler startTimePickerHandler = new TimePickerHandler(this, this.startDate, timeFormatter, updatedDate -> {
+        startDate = updatedDate;
+        updateFreeSeats();
+    });
+    private final TimePickerHandler endTimePickerHandler = new TimePickerHandler(this, this.endDate, timeFormatter, updatedDate -> {
+        endDate = updatedDate;
+        updateFreeSeats();
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,83 +77,25 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         UUID buildingId = UUID.fromString(getIntent().getStringExtra(BUILDING_ID_EXTRA_NAME));
         this.building = buildingService.getBuildingById(buildingId);
         setTitle(building.getName());
-        final ListView areas = findViewById(R.id.area_list);
-        EditText dateFrom = findViewById(R.id.from_date);
-        EditText dateTo = findViewById(R.id.to_date);
+
+        // Date pickers
+        EditText startDateEditText = findViewById(R.id.from_date);
+        EditText endDateEditText = findViewById(R.id.to_date);
         EditText startTimeEditText = findViewById(R.id.from_time);
         EditText endTimeEditText = findViewById(R.id.to_time);
-        ImageButton favoriteButton = findViewById(R.id.favorite_button);
 
-        dateFrom.setText(dateFormat.format(calendarFrom.getTime()));
-        dateTo.setText(dateFormat.format(calendarTo.getTime()));
-        startTimeEditText.setText(LocalTime.now().format(timeFormatter));
-        endTimeEditText.setText(LocalTime.now().plusHours(1).format(timeFormatter));
+        startDatePickerHandler.setDateView(startDateEditText);
+        endDatePickerHandler.setDateView(endDateEditText);
+        startTimePickerHandler.setDateView(startTimeEditText);
+        endTimePickerHandler.setDateView(endTimeEditText);
 
-        DatePickerDialog.OnDateSetListener dateSetListenerFrom = (view, year, month, day) -> {
-            calendarFrom.set(Calendar.YEAR, year);
-            calendarFrom.set(Calendar.MONTH, month);
-            calendarFrom.set(Calendar.DAY_OF_MONTH, day);
-            dateFrom.setText(dateFormat.format(calendarFrom.getTime()));
-            updateFreeSeats();
-        };
-
-        DatePickerDialog.OnDateSetListener dateSetListenerTo = (view, year, month, day) -> {
-            calendarTo.set(Calendar.YEAR, year);
-            calendarTo.set(Calendar.MONTH, month);
-            calendarTo.set(Calendar.DAY_OF_MONTH, day);
-            dateTo.setText(dateFormat.format(calendarTo.getTime()));
-            updateFreeSeats();
-        };
-
-
-        dateFrom.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.picker, dateSetListenerFrom, calendarFrom
-                .get(Calendar.YEAR), calendarFrom.get(Calendar.MONTH),
-                calendarFrom.get(Calendar.DAY_OF_MONTH)).show());
-
-        dateTo.setOnClickListener(v -> new DatePickerDialog(BuildingDetailsActivity.this, R.style.picker, dateSetListenerTo, calendarTo
-                .get(Calendar.YEAR), calendarTo.get(Calendar.MONTH),
-                calendarTo.get(Calendar.DAY_OF_MONTH)).show());
-
-        startTimeEditText.setOnClickListener(v -> {
-            int hour = timeFrom.get(Calendar.HOUR_OF_DAY);
-            int minute = timeFrom.get(Calendar.MINUTE);
-            TimePickerDialog timePicker = new TimePickerDialog(
-                    BuildingDetailsActivity.this, R.style.picker,
-                    (timePicker1, selectedHour, selectedMinute) -> startTimeEditText.setText(format(Locale.getDefault(), "%d:%d", selectedHour, selectedMinute)),
-                    hour,
-                    minute,
-                    true
-            );
-            timePicker.show();
-        });
-
-        endTimeEditText.setOnClickListener(v -> {
-            int hour = timeTo.get(Calendar.HOUR_OF_DAY);
-            int minute = timeTo.get(Calendar.MINUTE);
-            TimePickerDialog timePicker = new TimePickerDialog(
-                    BuildingDetailsActivity.this, R.style.picker,
-                    (timePicker12, selectedHour, selectedMinute) -> endTimeEditText.setText(format(Locale.getDefault(), "%d:%d", selectedHour, selectedMinute)),
-                    hour,
-                    minute,
-                    true
-            );
-            timePicker.show();
-        });
-
-        updateFreeSeats();
-
+        // Area list
+        final ListView areasListView = findViewById(R.id.area_list);
         this.areasAdapter = new AreasAdapter(this, building.getAllAreas(), seatStatusService, getPeriod());
-        areas.setAdapter(areasAdapter);
+        areasListView.setAdapter(areasAdapter);
+        areasListView.setOnItemClickListener((parent, view, position, id) -> startAreaDetailsActivity(building.getAllAreas().get(position)));
 
-        areas.setOnItemClickListener((parent, view, position, id) -> {
-            Area area = building.getAllAreas().get(position);
-            Intent intent = new Intent(this, AreaDetailsActivity.class);
-            intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
-            intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, area.getName());
-            intent.putExtra(AreaDetailsActivity.START_DATE_EXTRA_NAME, getPeriod().getStart().toString());
-            intent.putExtra(AreaDetailsActivity.END_DATE_EXTRA_NAME, getPeriod().getEnd().toString());
-            startActivity(intent);
-        });
+        ImageButton favoriteButton = findViewById(R.id.favorite_button);
 
         if (favoriteService.isFavorite(building)) {
             displayAsFavorite(favoriteButton);
@@ -162,14 +115,14 @@ public class BuildingDetailsActivity extends AppCompatActivity {
             }
         });
 
+        updateFreeSeats();
     }
 
     public void performQuickBooking(View view) {
         try {
             bookingService.bookAnySeat(building, getPeriod());
-            Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
             updateFreeSeats();
-            areasAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
         } catch (Throwable exception) {
             Toast.makeText(this, "Keine Plätze mehr frei", Toast.LENGTH_LONG).show();
         }
@@ -177,15 +130,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     }
 
     private Period getPeriod() {
-        EditText startTimeEditText = findViewById(R.id.from_time);
-        LocalTime startTime = LocalTime.parse(startTimeEditText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-        EditText endTimeEditText = findViewById(R.id.to_time);
-        LocalTime endTime = LocalTime.parse(endTimeEditText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-        LocalDateTime startDateTime = calendarFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-                .withHour(startTime.getHour()).withMinute(startTime.getMinute());
-        LocalDateTime endDateTime = calendarTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-                .withHour(endTime.getHour()).withMinute(endTime.getMinute());
-        return new Period(startDateTime, endDateTime);
+        return new Period(startDate, endDate);
     }
 
     private void displayAsFavorite(ImageButton favoriteButton) {
@@ -199,13 +144,18 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private void updateFreeSeats() {
         TextView seats = findViewById(R.id.seats_view);
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, getPeriod());
-        seats.setText(format(Locale.GERMAN, "%d / %d", freeSeats.size(), building.maximalSeats()));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateFreeSeats();
+        seats.setText(format(Locale.getDefault(), "%d / %d", freeSeats.size(), building.maximalSeats()));
+        areasAdapter.updatePeriod(getPeriod());
         areasAdapter.notifyDataSetChanged();
     }
+
+    private void startAreaDetailsActivity(Area area) {
+        Intent intent = new Intent(this, AreaDetailsActivity.class);
+        intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
+        intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, area.getName());
+        intent.putExtra(AreaDetailsActivity.START_DATE_EXTRA_NAME, getPeriod().getStart().toString());
+        intent.putExtra(AreaDetailsActivity.END_DATE_EXTRA_NAME, getPeriod().getEnd().toString());
+        startActivity(intent);
+    }
+
 }

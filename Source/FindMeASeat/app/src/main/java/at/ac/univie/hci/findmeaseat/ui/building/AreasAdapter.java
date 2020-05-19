@@ -21,12 +21,16 @@ public class AreasAdapter extends BaseAdapter {
     private final Context context;
     private final List<Area> areas;
     private final SeatStatusService seatStatusService;
-    private final Period period;
+    private Period period;
 
     AreasAdapter(Context context, List<Area> areas, SeatStatusService seatStatusService, Period period) {
         this.context = context;
         this.areas = areas;
         this.seatStatusService = seatStatusService;
+        this.period = period;
+    }
+
+    public void updatePeriod(Period period) {
         this.period = period;
     }
 
