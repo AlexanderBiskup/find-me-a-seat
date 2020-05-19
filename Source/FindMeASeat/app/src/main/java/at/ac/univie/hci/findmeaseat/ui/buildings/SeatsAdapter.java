@@ -38,7 +38,7 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     @NonNull
     @Override
     public SeatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_seat_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_seat, parent, false);
         return new SeatViewHolder(view);
     }
 
