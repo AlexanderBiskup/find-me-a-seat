@@ -25,10 +25,10 @@ public class RecentBookingsFragment extends Fragment implements BookingsAdapter.
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
+        View root = inflater.inflate(R.layout.fragment_recent_bookings, container, false);
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
 
-        TextView noRecentBookingsTextView = root.findViewById(R.id.no_bookings_message);
+        TextView noRecentBookingsTextView = root.findViewById(R.id.no_recent_bookings);
         if (bookingService.getCurrentBookings().isEmpty()) {
             noRecentBookingsTextView.setText("Es gibt keine aktuelle Buchungen!");
         }
