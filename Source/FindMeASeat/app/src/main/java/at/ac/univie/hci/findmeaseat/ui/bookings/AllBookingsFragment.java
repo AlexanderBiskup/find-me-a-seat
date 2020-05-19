@@ -21,6 +21,7 @@ import at.ac.univie.hci.findmeaseat.model.booking.BookingServiceFactory;
 public class AllBookingsFragment extends Fragment implements BookingsAdapter.SelectBookingHandler {
 
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
+    private boolean refreshOnResume = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
@@ -42,6 +43,21 @@ public class AllBookingsFragment extends Fragment implements BookingsAdapter.Sel
         Intent intent = new Intent(getContext(), BookingDetailsActivity.class);
         intent.putExtra(BookingDetailsActivity.BOOKING_ID_EXTRA_NAME, booking.getId().toString());
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (refreshOnResume) {
+            requireActivity().finish();
+            startActivity(requireActivity().getIntent());
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        refreshOnResume = true;
     }
 
 }

@@ -58,5 +58,15 @@ public class BookingFragment extends Fragment {
     interface BookingFragmentContext {
         Booking getBooking(UUID bookingId);
     }
+/*
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (refreshOnResume) {
+            requireActivity().finish();
+            startActivity(requireActivity().getIntent());
+        }
+    }
+*/
 
 }
