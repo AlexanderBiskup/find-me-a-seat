@@ -22,7 +22,7 @@ public class RecentBookingsFragment extends Fragment implements BookingsAdapter.
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
+        View root = inflater.inflate(R.layout.fragment_recent_bookings, container, false);
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
 
         BookingsAdapter adapter = new BookingsAdapter(bookingService.getCurrentBookings(), inflater, this);
