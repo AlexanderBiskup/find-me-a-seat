@@ -37,7 +37,7 @@
             android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
-            android:text="Gemerkte Gebäude" />
+            android:text="@string/favorite_buildings_label" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/home_all_favorite_buildings"

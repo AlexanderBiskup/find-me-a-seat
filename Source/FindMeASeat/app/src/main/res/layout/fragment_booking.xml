@@ -30,29 +30,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fakultät für Informatik"
-                android:textColor="#000000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/streetTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Address"
-                android:textColor="#000000" />
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/cityTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="City"
-                android:textColor="#000000" />
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/datesTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Do, 30.4. 12:00 - 13:00 Uhr"
-                android:textColor="#000000" />
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
 
@@ -72,26 +72,26 @@
                 android:id="@+id/areaTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="1. Stock"
-                android:textColor="#000000" />
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/seatTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="Platz D3"
-                android:textColor="#000000" />
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/durationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="60 min"
-                android:textColor="#000000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

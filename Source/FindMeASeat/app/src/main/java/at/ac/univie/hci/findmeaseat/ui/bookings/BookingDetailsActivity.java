@@ -37,9 +37,9 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
         }
         Button cancelBookingButton = findViewById(R.id.cancelBookingButton);
         if (LocalDateTime.now().isBefore(booking.getStart())) {
-            cancelBookingButton.setText("Buchung stornieren");
+            cancelBookingButton.setText(R.string.cancel_booking);
         } else if (LocalDateTime.now().isBefore(booking.getEnd())) {
-            cancelBookingButton.setText("Buchung beenden");
+            cancelBookingButton.setText(R.string.stop_booking);
         } else {
             ((ViewManager) getParent()).removeView(cancelBookingButton);
         }
