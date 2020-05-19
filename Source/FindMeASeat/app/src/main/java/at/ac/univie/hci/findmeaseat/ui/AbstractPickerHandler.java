@@ -12,7 +12,7 @@ public abstract class AbstractPickerHandler {
     private TextView dateView;
     private final DateTimeFormatter dateTimeFormatter;
     private final DateChangeListener dateChangeListener;
-    protected final Context context;
+    final Context context;
 
     AbstractPickerHandler(Context context, LocalDateTime initialDate, DateTimeFormatter dateTimeFormatter, DateChangeListener dateChangeListener) {
         this.date = initialDate;
@@ -23,7 +23,7 @@ public abstract class AbstractPickerHandler {
 
     abstract void openPicker();
 
-    protected LocalDateTime getDate() {
+    LocalDateTime getDate() {
         return date;
     }
 

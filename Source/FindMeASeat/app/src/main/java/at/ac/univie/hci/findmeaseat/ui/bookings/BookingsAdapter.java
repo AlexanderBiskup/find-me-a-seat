@@ -12,9 +12,9 @@ import java.util.Collection;
 import at.ac.univie.hci.findmeaseat.model.booking.Booking;
 import at.ac.univie.hci.findmeaseat.ui.bookings.BookingViewHolderFactory.BookingCardViewHolder;
 
-public class BookingsAdapter extends RecyclerView.Adapter<BookingCardViewHolder> {
+class BookingsAdapter extends RecyclerView.Adapter<BookingCardViewHolder> {
 
-    private ArrayList<Booking> bookings;
+    private final ArrayList<Booking> bookings;
     private final BookingViewHolderFactory bookingViewHolderFactory;
     private final SelectBookingHandler selectBookingHandler;
 

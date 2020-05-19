@@ -22,7 +22,7 @@ import at.ac.univie.hci.findmeaseat.model.building.Seat;
 
 import static java.time.LocalDateTime.now;
 
-public class BuildingAdapter extends BaseAdapter implements Filterable {
+class BuildingAdapter extends BaseAdapter implements Filterable {
 
     private final Context context;
     private final List<Building> buildings;

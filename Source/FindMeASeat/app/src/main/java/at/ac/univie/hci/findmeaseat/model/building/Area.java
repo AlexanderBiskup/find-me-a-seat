@@ -20,14 +20,8 @@ public final class Area {
         this.seats = new HashMap<>();
     }
 
-    public void addSeat(String name) {
+    void addSeat(String name) {
         seats.put(name, new Seat(name, this));
-    }
-
-    public Seat getSeat(String name) {
-        Seat seat = seats.get(name);
-        if (seat == null) throw new IllegalArgumentException("Seat not found.");
-        return seat;
     }
 
     public String getName() {

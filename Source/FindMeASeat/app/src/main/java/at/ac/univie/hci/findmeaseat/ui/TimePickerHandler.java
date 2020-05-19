@@ -2,14 +2,12 @@ package at.ac.univie.hci.findmeaseat.ui;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import at.ac.univie.hci.findmeaseat.R;
-import at.ac.univie.hci.findmeaseat.ui.building.BuildingDetailsActivity;
 
 public class TimePickerHandler extends AbstractPickerHandler implements TimePickerDialog.OnTimeSetListener {
 

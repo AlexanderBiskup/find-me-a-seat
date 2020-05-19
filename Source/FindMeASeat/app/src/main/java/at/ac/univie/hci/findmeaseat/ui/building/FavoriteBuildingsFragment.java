@@ -21,8 +21,8 @@ import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteServiceFactory;
 
 public class FavoriteBuildingsFragment extends Fragment {
 
-    private FavoriteService favoriteService = FavoriteServiceFactory.getSingletonInstance();
-    private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
+    private final FavoriteService favoriteService = FavoriteServiceFactory.getSingletonInstance();
+    private final SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
 
     @Nullable
     @Override

@@ -22,8 +22,8 @@ import at.ac.univie.hci.findmeaseat.model.building.service.BuildingServiceFactor
 
 public class BuildingFragment extends Fragment {
 
-    private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
-    private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
+    private final BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
+    private final SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
 
     private BuildingAdapter buildingAdapter;
 

@@ -62,8 +62,8 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     }
 
     static class SeatViewHolder extends RecyclerView.ViewHolder {
-        View parentView;
-        TextView textView;
+        final View parentView;
+        final TextView textView;
 
         SeatViewHolder(View view) {
             super(view);

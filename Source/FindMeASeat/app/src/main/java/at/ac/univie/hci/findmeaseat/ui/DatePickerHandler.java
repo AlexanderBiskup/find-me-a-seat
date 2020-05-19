@@ -4,14 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import at.ac.univie.hci.findmeaseat.R;
-import at.ac.univie.hci.findmeaseat.ui.building.BuildingDetailsActivity;
 
 public final class DatePickerHandler extends AbstractPickerHandler implements OnDateSetListener {
 

@@ -3,7 +3,6 @@ package at.ac.univie.hci.findmeaseat.model.booking;
 import androidx.annotation.NonNull;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
@@ -43,10 +42,6 @@ public final class Booking {
 
     public LocalDateTime getEnd() {
         return end;
-    }
-
-    public Long getDuration(ChronoUnit unit) {
-        return start.until(end, unit);
     }
 
 }

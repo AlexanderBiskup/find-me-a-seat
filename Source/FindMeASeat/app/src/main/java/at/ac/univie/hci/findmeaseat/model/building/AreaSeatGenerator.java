@@ -12,7 +12,7 @@ public class AreaSeatGenerator {
         buildings.forEach(this::generateSeats);
     }
 
-    public void generateSeats(Building building) {
+    private void generateSeats(Building building) {
         int areaCount = random.nextInt(8 - 1) + 1;
 
         for (int i = 1; i <= areaCount; ++i) building.addArea(i + "." + " " + "Stock");
@@ -26,7 +26,6 @@ public class AreaSeatGenerator {
                 seatNumber = 0;
             }
             for (; seatNumber <= 10; ++seatNumber) {
-                char finalC = seatPrefix;
                 String finalS = String.valueOf(seatPrefix);
                 int finalSeatNumber = seatNumber;
                 Collection<Area> areas = building.getAllAreas();

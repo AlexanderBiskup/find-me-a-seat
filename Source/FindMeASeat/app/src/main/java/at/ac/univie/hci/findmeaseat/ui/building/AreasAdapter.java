@@ -16,7 +16,7 @@ import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
 import at.ac.univie.hci.findmeaseat.model.building.Area;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
 
-public class AreasAdapter extends BaseAdapter {
+class AreasAdapter extends BaseAdapter {
 
     private final Context context;
     private final List<Area> areas;
@@ -30,7 +30,7 @@ public class AreasAdapter extends BaseAdapter {
         this.period = period;
     }
 
-    public void updatePeriod(Period period) {
+    void updatePeriod(Period period) {
         this.period = period;
     }
 

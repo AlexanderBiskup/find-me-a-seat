@@ -58,5 +58,5 @@ public class BookingFragment extends Fragment {
     interface BookingFragmentContext {
         Booking getBooking(UUID bookingId);
     }
-    
+
 }

@@ -33,9 +33,9 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     public static final String START_DATE_EXTRA_NAME = "startDate";
     public static final String END_DATE_EXTRA_NAME = "endDate";
 
-    private BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
-    private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
-    private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
+    private final BuildingService buildingService = BuildingServiceFactory.getSingletonInstance();
+    private final SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
+    private final BookingService bookingService = BookingServiceFactory.getSingletonInstance();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     private RecyclerView.Adapter seatsAdapter;

@@ -20,7 +20,7 @@ import at.ac.univie.hci.findmeaseat.model.booking.BookingServiceFactory;
 
 public class AllBookingsFragment extends Fragment implements BookingsAdapter.SelectBookingHandler {
 
-    private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
+    private final BookingService bookingService = BookingServiceFactory.getSingletonInstance();
     private boolean refreshOnResume = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

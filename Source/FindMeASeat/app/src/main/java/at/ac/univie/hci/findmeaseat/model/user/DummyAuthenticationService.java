@@ -7,7 +7,7 @@ public class DummyAuthenticationService implements AuthenticationService {
 
     private User authenticatedUser;
 
-    private Map<String, User> users = new HashMap<>();
+    private final Map<String, User> users = new HashMap<>();
 
     DummyAuthenticationService() {
         users.put("uni_administrator", new User("uni_administrator", "admin", "admin@findmeaseat.com", "23456", "admin", "admin"));
