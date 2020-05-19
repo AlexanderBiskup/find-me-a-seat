@@ -57,9 +57,9 @@ public class BuildingAdapter extends BaseAdapter implements Filterable {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_building, parent, false);
         }
 
-        TextView buildingName = convertView.findViewById(R.id.building_list_name);
+        TextView buildingName = convertView.findViewById(R.id.area_name);
         TextView buildingAddress = convertView.findViewById(R.id.building_list_address);
-        TextView buildingFloor = convertView.findViewById(R.id.building_list_seat);
+        TextView buildingFloor = convertView.findViewById(R.id.area_seat_count);
 
         Building buildingItem = (Building) getItem(position);
 

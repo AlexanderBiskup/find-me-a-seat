@@ -5,18 +5,16 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -24,9 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.booking.BookingService;
@@ -43,6 +39,8 @@ import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteService;
 import at.ac.univie.hci.findmeaseat.model.user.favorite.FavoriteServiceFactory;
 import at.ac.univie.hci.findmeaseat.ui.buildings.AreaDetailsActivity;
 
+import static java.lang.String.format;
+
 public class BuildingDetailsActivity extends AppCompatActivity {
 
     public static final String BUILDING_ID_EXTRA_NAME = "buildingId";
@@ -58,6 +56,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private Building building;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.GERMAN);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private AreasAdapter areasAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         UUID buildingId = UUID.fromString(getIntent().getStringExtra(BUILDING_ID_EXTRA_NAME));
         this.building = buildingService.getBuildingById(buildingId);
         setTitle(building.getName());
-        ListView areas = findViewById(R.id.area_list);
+        final ListView areas = findViewById(R.id.area_list);
         EditText dateFrom = findViewById(R.id.from_date);
         EditText dateTo = findViewById(R.id.to_date);
         EditText startTimeEditText = findViewById(R.id.from_time);
@@ -104,44 +103,39 @@ public class BuildingDetailsActivity extends AppCompatActivity {
                 .get(Calendar.YEAR), calendarTo.get(Calendar.MONTH),
                 calendarTo.get(Calendar.DAY_OF_MONTH)).show());
 
-        startTimeEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int hour = timeFrom.get(Calendar.HOUR_OF_DAY);
-                int minute = timeFrom.get(Calendar.MINUTE);
-                TimePickerDialog timePicker = new TimePickerDialog(BuildingDetailsActivity.this, R.style.picker, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        startTimeEditText.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);
-                timePicker.show();
-            }
+        startTimeEditText.setOnClickListener(v -> {
+            int hour = timeFrom.get(Calendar.HOUR_OF_DAY);
+            int minute = timeFrom.get(Calendar.MINUTE);
+            TimePickerDialog timePicker = new TimePickerDialog(
+                    BuildingDetailsActivity.this, R.style.picker,
+                    (timePicker1, selectedHour, selectedMinute) -> startTimeEditText.setText(format(Locale.getDefault(), "%d:%d", selectedHour, selectedMinute)),
+                    hour,
+                    minute,
+                    true
+            );
+            timePicker.show();
         });
 
-        endTimeEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int hour = timeTo.get(Calendar.HOUR_OF_DAY);
-                int minute = timeTo.get(Calendar.MINUTE);
-                TimePickerDialog timePicker = new TimePickerDialog(BuildingDetailsActivity.this, R.style.picker, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        endTimeEditText.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);
-                timePicker.show();
-            }
+        endTimeEditText.setOnClickListener(v -> {
+            int hour = timeTo.get(Calendar.HOUR_OF_DAY);
+            int minute = timeTo.get(Calendar.MINUTE);
+            TimePickerDialog timePicker = new TimePickerDialog(
+                    BuildingDetailsActivity.this, R.style.picker,
+                    (timePicker12, selectedHour, selectedMinute) -> endTimeEditText.setText(format(Locale.getDefault(), "%d:%d", selectedHour, selectedMinute)),
+                    hour,
+                    minute,
+                    true
+            );
+            timePicker.show();
         });
 
         updateFreeSeats();
 
-        List<String> areaNames = building.getAllAreas().stream().map(Area::getName).collect(Collectors.toList());
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, areaNames);
-        areas.setAdapter(arrayAdapter);
+        this.areasAdapter = new AreasAdapter(this, building.getAllAreas(), seatStatusService, getPeriod());
+        areas.setAdapter(areasAdapter);
 
         areas.setOnItemClickListener((parent, view, position, id) -> {
-            Area area = building.getArea(areaNames.get(position));
+            Area area = building.getAllAreas().get(position);
             Intent intent = new Intent(this, AreaDetailsActivity.class);
             intent.putExtra(AreaDetailsActivity.BUILDING_ID_EXTRA_NAME, building.getId().toString());
             intent.putExtra(AreaDetailsActivity.AREA_NAME_EXTRA_NAME, area.getName());
@@ -175,6 +169,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
             bookingService.bookAnySeat(building, getPeriod());
             Toast.makeText(this, "Sitz wurde gebucht", Toast.LENGTH_LONG).show();
             updateFreeSeats();
+            areasAdapter.notifyDataSetChanged();
         } catch (Throwable exception) {
             Toast.makeText(this, "Keine Plätze mehr frei", Toast.LENGTH_LONG).show();
         }
@@ -204,7 +199,13 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private void updateFreeSeats() {
         TextView seats = findViewById(R.id.seats_view);
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, getPeriod());
-        seats.setText(String.format(Locale.GERMAN, "%d / %d", freeSeats.size(), building.maximalSeats()));
+        seats.setText(format(Locale.GERMAN, "%d / %d", freeSeats.size(), building.maximalSeats()));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateFreeSeats();
+        areasAdapter.notifyDataSetChanged();
+    }
 }
