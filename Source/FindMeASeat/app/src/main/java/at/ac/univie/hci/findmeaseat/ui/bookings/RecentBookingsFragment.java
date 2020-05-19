@@ -1,5 +1,6 @@
 package at.ac.univie.hci.findmeaseat.ui.bookings;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,11 +24,12 @@ public class RecentBookingsFragment extends Fragment implements BookingsAdapter.
     private BookingService bookingService = BookingServiceFactory.getSingletonInstance();
     TextView norecents;
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_recent_bookings, container, false);
+        View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
 
-        norecents = root.findViewById(R.id.nobookings);
+        norecents = root.findViewById(R.id.no_bookings_message);
         if(bookingService.getCurrentBookings().size() == 0){
             norecents.setText("Es gibt keine aktuelle Buchungen!");
         }
