@@ -41,7 +41,7 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
         } else if (LocalDateTime.now().isBefore(booking.getEnd())) {
             cancelBookingButton.setText(R.string.stop_booking);
         } else {
-            ((ViewManager) getParent()).removeView(cancelBookingButton);
+            cancelBookingButton.setVisibility(View.INVISIBLE);
         }
     }
 
