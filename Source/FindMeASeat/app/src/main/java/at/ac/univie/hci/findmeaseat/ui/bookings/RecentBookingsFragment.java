@@ -24,7 +24,7 @@ public class RecentBookingsFragment extends Fragment implements BookingsAdapter.
     TextView norecents;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_all_bookings, container, false);
+        View root = inflater.inflate(R.layout.fragment_recent_bookings, container, false);
         RecyclerView bookingsRecyclerView = root.findViewById(R.id.bookingsListView);
 
         norecents = root.findViewById(R.id.nobookings);

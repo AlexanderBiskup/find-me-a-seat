@@ -23,16 +23,15 @@ public class FavoriteBuildingsFragment extends Fragment {
 
     private FavoriteService favoriteService = FavoriteServiceFactory.getSingletonInstance();
     private SeatStatusService seatStatusService = SeatStatusServiceFactory.getSingletonInstance();
-    TextView nofavorites;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_favorite_buildings, container, false);
 
-        nofavorites = root.findViewById(R.id.nofavorites);
-        if(favoriteService.getAllFavorites().size() == 0){
-            nofavorites.setText("Es gibt keine gemerkte Gebäude!");
+        TextView noFavoritesTextView = root.findViewById(R.id.no_favorites_message);
+        if(favoriteService.getAllFavorites().isEmpty()){
+            noFavoritesTextView.setText("Es gibt keine gemerkte Gebäude!");
         }
 
         final ListView buildings = root.findViewById(R.id.favorite_building_list);
@@ -46,11 +45,7 @@ public class FavoriteBuildingsFragment extends Fragment {
             startActivity(intent);
         });
 
-
-
         return root;
     }
-
-
 
 }
