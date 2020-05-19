@@ -24,7 +24,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_in">Log In</string>
     <string name="username">Benutzername</string>
-    <string name="welcome_to_the_app">Welcome to the App!</string>
+    <string name="welcome_to_the_app">Willkommen!</string>
     <string name="passwort">Passwort</string>
     <string name="title_building">Building</string>
     <string name="overview">Overview</string>
@@ -32,9 +32,9 @@
     <string name="Bookings">Bookings</string>
     <string name="title_buildings">Gebäude</string>
     <string name="current_bookings">Aktuelle Buchungen</string>
-    <string name="matrikelnummer">Matrikelnummer</string>
-    <string name="vorname">Vorname</string>
-    <string name="nachname">Nachname</string>
-    <string name="e_mail_adresse">E-Mail Adresse</string>
+    <string name="matriculation_number_label">Matrikelnummer</string>
+    <string name="first_name_label">Vorname</string>
+    <string name="last_name_label">Nachname</string>
+    <string name="email_address_label">E-Mail Adresse</string>
     <string name="log_out">Log Out</string>
 </resources>

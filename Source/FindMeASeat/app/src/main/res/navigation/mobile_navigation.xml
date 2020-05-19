@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_user_profile"
-        android:name="at.ac.univie.hci.findmeaseat.ui.dashboard.DashboardFragment"
+        android:name="at.ac.univie.hci.findmeaseat.ui.profile.UserProfileFragment"
         android:label="@string/title_user_profile"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_user_profile" />
 
     <fragment
         android:id="@+id/navigation_all_bookings"

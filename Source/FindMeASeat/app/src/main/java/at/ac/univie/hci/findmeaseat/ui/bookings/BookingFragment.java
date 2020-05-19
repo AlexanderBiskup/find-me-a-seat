@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.model.booking.Booking;
-import at.ac.univie.hci.findmeaseat.ui.bookings.BookingCardViewCreator.BookingCardViewHolder;
+import at.ac.univie.hci.findmeaseat.ui.bookings.BookingViewHolderFactory.BookingCardViewHolder;
 
 public class BookingFragment extends Fragment {
 
@@ -48,7 +48,7 @@ public class BookingFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        BookingCardViewCreator viewCreator = new BookingCardViewCreator(inflater);
+        BookingViewHolderFactory viewCreator = new BookingViewHolderFactory(inflater);
         BookingCardViewHolder viewHolder = viewCreator.createViewHolder(container);
         Booking booking = context.getBooking(bookingId);
         viewHolder.bindBooking(booking);

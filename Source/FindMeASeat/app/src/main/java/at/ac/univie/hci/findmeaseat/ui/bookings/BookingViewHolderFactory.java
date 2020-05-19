@@ -1,6 +1,5 @@
 package at.ac.univie.hci.findmeaseat.ui.bookings;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,11 @@ import at.ac.univie.hci.findmeaseat.model.building.Building;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
 
-class BookingCardViewCreator {
+class BookingViewHolderFactory {
 
     private final LayoutInflater inflater;
 
-    BookingCardViewCreator(LayoutInflater inflater) {
+    BookingViewHolderFactory(LayoutInflater inflater) {
         this.inflater = inflater;
     }
 
