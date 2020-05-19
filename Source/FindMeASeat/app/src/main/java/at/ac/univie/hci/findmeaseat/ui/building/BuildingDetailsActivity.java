@@ -118,6 +118,12 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         updateFreeSeats();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateFreeSeats();
+    }
+
     public void performQuickBooking(View view) {
         try {
             bookingService.bookAnySeat(building, getPeriod());
