@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import at.ac.univie.hci.findmeaseat.R;
 import at.ac.univie.hci.findmeaseat.model.booking.Period;
 import at.ac.univie.hci.findmeaseat.model.booking.status.SeatStatusService;
+import at.ac.univie.hci.findmeaseat.model.building.Address;
 import at.ac.univie.hci.findmeaseat.model.building.Building;
 import at.ac.univie.hci.findmeaseat.model.building.Seat;
 
@@ -61,12 +62,13 @@ class BuildingAdapter extends BaseAdapter implements Filterable {
         TextView buildingAddress = convertView.findViewById(R.id.building_list_address);
         TextView buildingFloor = convertView.findViewById(R.id.area_seat_count);
 
-        Building buildingItem = (Building) getItem(position);
+        Building building = (Building) getItem(position);
 
-        buildingName.setText(buildingItem.getName());
-        buildingAddress.setText(buildingItem.getAddress().getStreet());
-        List<Seat> freeSeats = seatStatusService.getFreeSeats(buildingItem, new Period(now(), now().plusMinutes(1)));
-        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", freeSeats.size(), buildingItem.maximalSeats()));
+        buildingName.setText(building.getName());
+        Address address = building.getAddress();
+        buildingAddress.setText(String.format("%s, %s %s", address.getStreet(), address.getZipCode(), address.getCity()));
+        List<Seat> freeSeats = seatStatusService.getFreeSeats(building, new Period(now(), now().plusMinutes(1)));
+        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", freeSeats.size(), building.maximalSeats()));
         return convertView;
     }
 
@@ -102,7 +104,10 @@ class BuildingAdapter extends BaseAdapter implements Filterable {
 
     private boolean buildingMatchesConstraint(Building building, CharSequence constraint) {
         String sanitizedConstraint = constraint.toString().toLowerCase();
-        return building.getName().toLowerCase().contains(sanitizedConstraint) || building.getAddress().getStreet().toLowerCase().contains(sanitizedConstraint);
+        return (building.getName().toLowerCase().contains(sanitizedConstraint))
+                || (building.getAddress().getStreet().toLowerCase().contains(sanitizedConstraint))
+                || (building.getAddress().getCity().toLowerCase().contains(sanitizedConstraint))
+                || (building.getAddress().getZipCode().toLowerCase().contains(sanitizedConstraint));
     }
 
 }
