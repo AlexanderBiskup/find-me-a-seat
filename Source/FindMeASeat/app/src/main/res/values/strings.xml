@@ -26,7 +26,7 @@
     <string name="booking_button_text">Buchen</string>
     <string name="cancel_booking_button_label">Stornieren</string>
     <string name="time_placeholder">Uhrzeit</string>
-    <string name="seats_placeholder">Plätze:</string>
+    <string name="seats_placeholder">Plätze (frei/alle):</string>
     <string name="quick_booking_button_text">Schnellbuchung</string>
     <string name="areas_label">Bereiche</string>
     <string name="from_label">Von:</string>
@@ -39,4 +39,5 @@
     <string name="stop_booking">Buchung beenden</string>
     <string name="no_favorite_buildings_text">Keine gemerkten Gebäude vorhanden</string>
     <string name="no_recent_bookings_text">Keine aktuellen Buchungen vorhanden</string>
+    <string name="free_seats_label">Plätze (frei/alle)</string>
 </resources>

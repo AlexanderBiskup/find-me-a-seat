@@ -150,7 +150,7 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private void updateFreeSeats() {
         TextView seats = findViewById(R.id.seats_view);
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, getPeriod());
-        seats.setText(format(Locale.getDefault(), "%d / %d", freeSeats.size(), building.maximalSeats()));
+        seats.setText(format(Locale.getDefault(), "%d/%d", freeSeats.size(), building.maximalSeats()));
         areasAdapter.updatePeriod(getPeriod());
         areasAdapter.notifyDataSetChanged();
     }
