@@ -3,7 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_user_profile">Profil</string>
     <string name="title_all_bookings">Buchungen</string>
-    <string name="filterUniversity">Filter</string>
+    <string name="filterUniversity">Fakultät oder Adresse suchen</string>
     <string name="log_in">Log In</string>
     <string name="username">Benutzername</string>
     <string name="welcome_to_the_app">Willkommen!</string>
