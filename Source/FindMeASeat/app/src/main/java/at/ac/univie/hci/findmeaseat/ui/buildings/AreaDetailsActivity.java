@@ -1,15 +1,18 @@
 package at.ac.univie.hci.findmeaseat.ui.buildings;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.R;
@@ -47,6 +50,7 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_details);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         UUID buildingId = UUID.fromString(getIntent().getStringExtra(BUILDING_ID_EXTRA_NAME));
         String areaName = getIntent().getStringExtra(AREA_NAME_EXTRA_NAME);
         Building building = buildingService.getBuildingById(buildingId);
@@ -61,6 +65,12 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
         seatsAdapter =
                 new SeatsAdapter(area.getAllSeats(), this, this, seatStatusService, period);
         seatsRecyclerView.setAdapter(seatsAdapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        return true;
     }
 
     @Override

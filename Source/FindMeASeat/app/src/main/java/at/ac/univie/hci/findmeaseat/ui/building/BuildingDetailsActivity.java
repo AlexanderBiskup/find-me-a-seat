@@ -2,6 +2,7 @@ package at.ac.univie.hci.findmeaseat.ui.building;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -9,12 +10,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.R;
@@ -77,6 +80,8 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         UUID buildingId = UUID.fromString(getIntent().getStringExtra(BUILDING_ID_EXTRA_NAME));
         this.building = buildingService.getBuildingById(buildingId);
         setTitle(building.getName());
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Date pickers
         EditText startDateEditText = findViewById(R.id.from_date);
@@ -164,4 +169,9 @@ public class BuildingDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        return true;
+    }
 }

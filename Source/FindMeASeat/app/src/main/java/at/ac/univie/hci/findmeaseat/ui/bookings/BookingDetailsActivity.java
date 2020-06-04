@@ -1,14 +1,17 @@
 package at.ac.univie.hci.findmeaseat.ui.bookings;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 import at.ac.univie.hci.findmeaseat.R;
@@ -28,6 +31,7 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         UUID bookingId = UUID.fromString(getIntent().getStringExtra(BOOKING_ID_EXTRA_NAME));
         booking = bookingService.getBookingById(bookingId);
         setTitle("Buchungsdetails");
@@ -62,4 +66,9 @@ public class BookingDetailsActivity extends AppCompatActivity implements Booking
         finish();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        return true;
+    }
 }
