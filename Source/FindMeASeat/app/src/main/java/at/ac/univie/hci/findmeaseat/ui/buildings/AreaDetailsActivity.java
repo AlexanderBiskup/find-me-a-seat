@@ -88,7 +88,10 @@ public class AreaDetailsActivity extends AppCompatActivity implements SeatsAdapt
     }
 
     public void bookSelectedSeat(View view) {
-        if(selectedSeat == null) return;
+        if(selectedSeat == null) {
+            Toast.makeText(this, "Bitte wähle zuerst einen Sitz aus", Toast.LENGTH_LONG).show();
+            return;
+        }
         bookingService.bookSeat(selectedSeat, period);
         selectedSeat = null;
         seatsAdapter.notifyDataSetChanged();
