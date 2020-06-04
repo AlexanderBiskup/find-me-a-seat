@@ -68,7 +68,7 @@ class BuildingAdapter extends BaseAdapter implements Filterable {
         Address address = building.getAddress();
         buildingAddress.setText(String.format("%s, %s %s", address.getStreet(), address.getZipCode(), address.getCity()));
         List<Seat> freeSeats = seatStatusService.getFreeSeats(building, new Period(now(), now().plusMinutes(1)));
-        buildingFloor.setText(String.format(Locale.GERMAN, "%d/%d", freeSeats.size(), building.maximalSeats()));
+        buildingFloor.setText(String.format(Locale.getDefault(), "%d/%d", freeSeats.size(), building.maximalSeats()));
         return convertView;
     }
 

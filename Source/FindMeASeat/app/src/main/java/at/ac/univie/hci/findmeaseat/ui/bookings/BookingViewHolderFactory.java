@@ -48,7 +48,7 @@ class BookingViewHolderFactory {
             ((TextView) bookingCardView.findViewById(R.id.datesTextView)).setText(getFormattedDates(booking));
             ((TextView) bookingCardView.findViewById(R.id.areaTextView)).setText(booking.getSeat().getArea().getName());
             ((TextView) bookingCardView.findViewById(R.id.seatTextView)).setText(String.format("Platz %s", booking.getSeat().getName()));
-            ((TextView) bookingCardView.findViewById(R.id.durationTextView)).setText(getFormattedDuration(booking));
+            ((TextView) bookingCardView.findViewById(R.id.durationTextView)).setText(getFormattedBookingDuration(booking));
         }
 
         View getBookingCardView() {
@@ -60,18 +60,31 @@ class BookingViewHolderFactory {
         }
 
         private String getFormattedDates(Booking booking) {
-            String date = booking.getStart().format(ofPattern("E dd.MM.", Locale.GERMAN));
+            String date = booking.getStart().format(ofPattern("E dd.MM.", Locale.getDefault()));
             return String.format("%s %s - %s Uhr", date, booking.getStart().format(ofPattern("HH:mm")), booking.getEnd().format(ofPattern("HH:mm")));
         }
 
-        private String getFormattedDuration(Booking booking) {
+        private String getFormattedBookingDuration(Booking booking) {
             if (LocalDateTime.now().isBefore(booking.getStart())) {
-                return String.format(Locale.GERMAN, "Beginnt in %d min", LocalDateTime.now().until(booking.getStart(), ChronoUnit.MINUTES));
+                long durationInMinutes = LocalDateTime.now().until(booking.getStart(), ChronoUnit.MINUTES);
+                return String.format(Locale.getDefault(), "Beginnt in\n%s", getFormattedDuration(durationInMinutes));
             } else if (LocalDateTime.now().isBefore(booking.getEnd())) {
-                return String.format(Locale.GERMAN, "Noch %d min", LocalDateTime.now().until(booking.getEnd(), ChronoUnit.MINUTES));
+                long durationInMinutes = LocalDateTime.now().until(booking.getEnd(), ChronoUnit.MINUTES);
+                return String.format(Locale.getDefault(), "Noch\n%s", getFormattedDuration(durationInMinutes));
             } else {
                 return "Beendet";
             }
+        }
+
+        private String getFormattedDuration(long durationInMinutes) {
+            long days = durationInMinutes / (60 * 24);
+            long hours = (durationInMinutes - (days * 60 * 24)) / 60;
+            long minutes = durationInMinutes - (days * 60 * 24) - (hours * 60);
+            StringBuilder builder = new StringBuilder();
+            if (days > 0) builder.append(days).append(" Tagen ");
+            if (hours > 0) builder.append(hours).append(" Stunden ");
+            if (minutes > 0) builder.append(minutes).append(" Minuten ");
+            return builder.toString();
         }
 
     }

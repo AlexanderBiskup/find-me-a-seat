@@ -62,7 +62,7 @@ class AreasAdapter extends BaseAdapter {
 
         nameTextView.setText(area.getName());
         List<Seat> freeSeats = seatStatusService.getFreeSeats(area, period);
-        seatCountTextView.setText(String.format(Locale.GERMAN, "%d/%d", freeSeats.size(), area.getAllSeats().size()));
+        seatCountTextView.setText(String.format(Locale.getDefault(), "%d/%d", freeSeats.size(), area.getAllSeats().size()));
         return convertView;
     }
 

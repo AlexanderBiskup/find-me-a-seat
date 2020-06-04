@@ -53,19 +53,19 @@ public class BuildingDetailsActivity extends AppCompatActivity {
     private LocalDateTime endDate = LocalDateTime.now().plusHours(1);
 
     private final DatePickerHandler startDatePickerHandler = new DatePickerHandler(this, this.startDate, dateFormatter, updatedDate -> {
-        startDate = updatedDate;
+        startDate = startDate.withYear(updatedDate.getYear()).withMonth(updatedDate.getMonthValue()).withDayOfMonth(updatedDate.getDayOfMonth());
         updateFreeSeats();
     });
     private final DatePickerHandler endDatePickerHandler = new DatePickerHandler(this, this.endDate, dateFormatter, updatedDate -> {
-        endDate = updatedDate;
+        endDate = endDate.withYear(updatedDate.getYear()).withMonth(updatedDate.getMonthValue()).withDayOfMonth(updatedDate.getDayOfMonth());
         updateFreeSeats();
     });
     private final TimePickerHandler startTimePickerHandler = new TimePickerHandler(this, this.startDate, timeFormatter, updatedDate -> {
-        startDate = updatedDate;
+        startDate = startDate.withHour(updatedDate.getHour()).withMinute(updatedDate.getMinute());
         updateFreeSeats();
     });
     private final TimePickerHandler endTimePickerHandler = new TimePickerHandler(this, this.endDate, timeFormatter, updatedDate -> {
-        endDate = updatedDate;
+        endDate = endDate.withHour(updatedDate.getHour()).withMinute(updatedDate.getMinute());
         updateFreeSeats();
     });
 
