@@ -96,6 +96,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Merken"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        />
+
     <ImageButton
         android:id="@+id/favorite_button"
         android:layout_width="45dp"
