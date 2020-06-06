@@ -1,4 +1,4 @@
-## Readme - M3
+## Readme - M4
 
 * Gruppe:	Mittwoch
 * Team-Nr.:     212
@@ -17,7 +17,7 @@ Externe Libraries und Frameworks:
 keine
 
 Dauer der Entwicklung:
-ca. 56 Stunden
+ca. 4 Stunden
 
 Weitere Anmerkungen:
 Für den Login wurden einige User vordefiniert (username, password):
